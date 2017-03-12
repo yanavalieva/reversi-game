@@ -8,13 +8,13 @@ let game: ReversiGame = ReversiGame()
 game.delegate = ReversiGameTracker()
 print(game)
 
-var blackPlayer = ReversiPlayer(name: "James Moriarty")
-var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
+//var blackPlayer = ReversiPlayer(name: "James Moriarty")
+//var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
 
-game.joinFirst(player: blackPlayer)
-game.joinSecond(player: whitePlayer)
+//game.joinFirst(player: blackPlayer)
+//game.joinSecond(player: whitePlayer)
 
-game.play()
+//game.play()
 
 
 
