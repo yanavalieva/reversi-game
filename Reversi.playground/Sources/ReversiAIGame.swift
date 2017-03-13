@@ -1,6 +1,29 @@
 import Foundation
 
 public class ReversiAIGame : ReversiGame {
+ 
+    public override func makeTurn() {
+        let children = generateChildren()
+        guard children.count > 0 else {
+            delegate?.player(firstPlayer!, didTakeAction: .skipTurn)
+            return
+        }
+        var maxSquare = (0, 0)
+        var maxHeur = -Double.infinity
+        for child in children {
+            let h = child.0.alphaBeta(
+                alpha: -Double.infinity, beta: Double.infinity, depth: 1)
+            if h > maxHeur {
+                maxHeur = h
+                maxSquare = (child.1, child.2)
+            }
+        }
+        if step(maxSquare.0, maxSquare.1) {
+            delegate?.player(firstPlayer!, didTakeAction:
+                .move(square: (maxSquare.0, maxSquare.1), game: self))
+        }
+    }
+
     
     private let priority: [Double] = [
         50,  -2,  10,  7,  7,  10,  -2,  50,
@@ -36,7 +59,7 @@ public class ReversiAIGame : ReversiGame {
             return -heuristic()
         }
         for child in children {
-            let s = -child.alphaBeta(alpha: -score, beta: -alpha, depth: depth - 1)
+            let s = -child.0.alphaBeta(alpha: -score, beta: -alpha, depth: depth - 1)
             score = s < score ? s : score
             if score <= alpha {
                 return score
@@ -45,7 +68,7 @@ public class ReversiAIGame : ReversiGame {
         return 0
     }
     
-    func next(_ i: Int, _ j: Int) -> ReversiAIGame? {
+    func next(_ i: Int, _ j: Int) -> (ReversiAIGame, Int, Int)? {
         let cloned = ReversiAIGame()
         cloned.board = self.board
         cloned.firstPlayer = (self.firstPlayer as! ReversiPlayer).clone()
@@ -54,11 +77,11 @@ public class ReversiAIGame : ReversiGame {
             return nil
         }
         swap(&firstPlayer, &secondPlayer)
-        return cloned
+        return (cloned, i, j)
     }
     
-    func generateChildren() -> [ReversiAIGame] {
-        var children: [ReversiAIGame?] = []
+    func generateChildren() -> [(ReversiAIGame, Int, Int)] {
+        var children: [(ReversiAIGame, Int, Int)?] = []
         for i in 0...boardSize {
             for j in 0...boardSize {
                 children.append(next(i, j))
