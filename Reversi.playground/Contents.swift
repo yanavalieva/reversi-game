@@ -3,10 +3,9 @@
  
  ![PlayWithMe](reversi.jpg)
 */
-
-let game: ReversiGame = ReversiGame()
-game.delegate = ReversiGameTracker()
-print(game)
+//let game: ReversiGame = ReversiGame()
+//game.delegate = ReversiGameTracker()
+//print(game)
 
 //var blackPlayer = ReversiPlayer(name: "James Moriarty")
 //var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")

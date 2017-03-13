@@ -53,8 +53,6 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         }
     }
     
-    
-    
     public func start() {
         firstPlayer?.score = 2
         secondPlayer?.score = 2
@@ -156,8 +154,6 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         }
         return false
     }
-
-    
 }
 
 extension ReversiGame: CustomStringConvertible {
