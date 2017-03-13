@@ -7,7 +7,8 @@ public protocol Game {
 
 public protocol GameDelegate {
     func gameDidStart(_ game: Game)
-    func gameDidEnd(_ game: Game)
+    func gameDidEnd()
+    func drawGame()
 }
 
 extension GameDelegate {
@@ -15,7 +16,11 @@ extension GameDelegate {
         print("\nThe \(game.name)-game is on!\n")
     }
     
-    public func gameDidEnd(_ game: Game) {
+    public func gameDidEnd() {
         print("Game over!")
+    }
+    
+    public func drawGame() {
+        print("Draw game!")
     }
 }

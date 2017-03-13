@@ -3,17 +3,18 @@
  
  ![PlayWithMe](reversi.jpg)
 */
-//let game: ReversiGame = ReversiGame()
-//game.delegate = ReversiGameTracker()
-//print(game)
 
-//var blackPlayer = ReversiPlayer(name: "James Moriarty")
-//var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
+let game: ReversiGame = ReversiAIGame()
+game.delegate = ReversiGameTracker()
+print(game)
 
-//game.joinFirst(player: blackPlayer)
-//game.joinSecond(player: whitePlayer)
+var blackPlayer = ReversiPlayer(name: "James Moriarty")
+var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
 
-//game.play()
+game.joinFirst(player: blackPlayer)
+game.joinSecond(player: whitePlayer)
+
+game.play()
 
 
 

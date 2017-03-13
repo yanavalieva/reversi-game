@@ -8,24 +8,24 @@ public class ReversiAIGame : ReversiGame {
             delegate?.player(firstPlayer!, didTakeAction: .skipTurn)
             return
         }
-        var maxSquare = (0, 0)
+        var maxChild : (ReversiAIGame, Int, Int) = children[0]
         var maxHeur = -Double.infinity
         for child in children {
             let h = child.0.alphaBeta(
-                alpha: -Double.infinity, beta: Double.infinity, depth: 1)
+                alpha: -Double.infinity, beta: Double.infinity, depth: 4)
             if h > maxHeur {
                 maxHeur = h
-                maxSquare = (child.1, child.2)
+                maxChild = child
             }
         }
-        if step(maxSquare.0, maxSquare.1) {
-            delegate?.player(firstPlayer!, didTakeAction:
-                .move(square: (maxSquare.0, maxSquare.1), game: self))
+        if step(maxChild.1, maxChild.2) {
+            delegate?.player(firstPlayer!, didTakeAction: .move(square: (maxChild.1, maxChild.2), game: self))
+        } else {
+            delegate?.playerError("Something went wrong")
         }
     }
-
     
-    private let priority: [Double] = [
+    private static let priority: [Double] = [
         50,  -2,  10,  7,  7,  10,  -2,  50,
         -2,  -5,   0,  2,  2,   0,  -5,  -2,
         10,   0,  10,  5,  5,  10,   0,  10,
@@ -40,10 +40,10 @@ public class ReversiAIGame : ReversiGame {
         var h = 0.0
         for i in 0...boardSize {
             if board[i] == firstPlayer?.color {
-                h += priority[i]
+                h += ReversiAIGame.priority[i]
             } else {
                 
-                h -= board[i] == secondPlayer?.color ? priority[i] : 0
+                h -= board[i] == secondPlayer?.color ? ReversiAIGame.priority[i] : 0
             }
         }
         return h / 64.0 * Double((firstPlayer?.score)!)
@@ -76,9 +76,10 @@ public class ReversiAIGame : ReversiGame {
         guard cloned.step(i, j) else {
             return nil
         }
-        swap(&firstPlayer, &secondPlayer)
+        swap(&cloned.firstPlayer, &cloned.secondPlayer)
         return (cloned, i, j)
     }
+    
     
     func generateChildren() -> [(ReversiAIGame, Int, Int)] {
         var children: [(ReversiAIGame, Int, Int)?] = []

@@ -10,7 +10,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     public var secondPlayer: Player?
     public var delegate: ReversiGameDelegate?
     
-    let directions = [
+    static let directions = [
         { ($0 - 1, $1) },
         { ($0 - 1, $1 + 1) },
         { ($0, $1 + 1) },
@@ -60,9 +60,13 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     }
     
     public func end() {
-        delegate?.player(firstPlayer!.score > secondPlayer!.score ?
-            firstPlayer! : secondPlayer!, didTakeAction: .win)
-        delegate?.gameDidEnd(self)
+        if firstPlayer!.score == secondPlayer!.score {
+            delegate?.drawGame()
+        } else {
+            delegate?.player(firstPlayer!.score > secondPlayer!.score ?
+                firstPlayer! : secondPlayer!, didTakeAction: .win)
+        }
+        delegate?.gameDidEnd()
     }
     
     public func play() {
@@ -142,7 +146,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     }
     
     public func step(_ i: Int, _ j: Int) -> Bool {
-        let total = directions.map{ checkDirections(i, j, $0) }.flatMap{ $0 }
+        let total = ReversiGame.directions.map{ checkDirections(i, j, $0) }.flatMap{ $0 }
         if total.count > 0 {
             for k in total {
                 board[k] = firstPlayer!.color
