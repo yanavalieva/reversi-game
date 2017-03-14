@@ -17,6 +17,13 @@ public class ReversiAIGame : ReversiGame {
                 maxHeur = h
                 maxChild = child
             }
+            else if h == maxHeur {
+                let rand = Int(arc4random()) % 2
+                if rand == 0 {
+                    maxHeur = h
+                    maxChild = child
+                }
+            }
         }
         if step(maxChild.1, maxChild.2) {
             delegate?.player(firstPlayer!, didTakeAction: .move(square: (maxChild.1, maxChild.2), game: self))
@@ -42,7 +49,6 @@ public class ReversiAIGame : ReversiGame {
             if board[i] == firstPlayer?.color {
                 h += ReversiAIGame.priority[i]
             } else {
-                
                 h -= board[i] == secondPlayer?.color ? ReversiAIGame.priority[i] : 0
             }
         }

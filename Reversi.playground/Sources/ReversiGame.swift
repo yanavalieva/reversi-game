@@ -66,7 +66,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
             delegate?.player(firstPlayer!.score > secondPlayer!.score ?
                 firstPlayer! : secondPlayer!, didTakeAction: .win)
         }
-        delegate?.gameDidEnd()
+        delegate?.gameDidEnd(self)
     }
     
     public func play() {

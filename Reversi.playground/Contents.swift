@@ -4,7 +4,7 @@
  ![PlayWithMe](reversi.jpg)
 */
 
-
+import Foundation
 let game: ReversiGame = ReversiAIGame()
 game.delegate = ReversiGameTracker()
 print(game)
