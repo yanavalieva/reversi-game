@@ -11,7 +11,7 @@ public class ReversiAIGame : ReversiGame {
         var maxChild : (ReversiAIGame, Int, Int) = children[0]
         var maxHeur = -Double.infinity
         for child in children {
-            let h = child.0.alphaBeta(
+            let h = -child.0.alphaBeta(
                 alpha: -Double.infinity, beta: Double.infinity, depth: 4)
             if h > maxHeur {
                 maxHeur = h
@@ -46,9 +46,9 @@ public class ReversiAIGame : ReversiGame {
                 h -= board[i] == secondPlayer?.color ? ReversiAIGame.priority[i] : 0
             }
         }
-        return h / 64.0 * Double((firstPlayer?.score)!)
+        return h / 64.0
     }
-    
+ 
     func alphaBeta(alpha: Double, beta: Double, depth: Int) -> Double {
         if depth == 0 || hasEnded {
             return -heuristic()
@@ -65,7 +65,7 @@ public class ReversiAIGame : ReversiGame {
                 return score
             }
         }
-        return 0
+        return score
     }
     
     func next(_ i: Int, _ j: Int) -> (ReversiAIGame, Int, Int)? {
