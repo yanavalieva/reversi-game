@@ -14,9 +14,13 @@ gameBoard.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803
 
 let playButton = Button(frame: CGRect(x: offset * 2, y: height - (field + offset) / 2 - 60 / 2, width: 120, height: 60))
 playButton.setTitle("Play!", for: .normal)
+let ctrl1 = ButtonController(button: playButton)
+playButton.addTarget(ctrl1, action: #selector(ButtonController.buttonTouched) , for: .touchUpInside )
 
 let demoButton = Button(frame: CGRect(x: offset * 3 + 120, y: height - (field + offset) / 2 - 60 / 2, width: 120, height: 60))
 demoButton.setTitle("Demo", for: .normal)
+let ctrl2 = ButtonController(button: demoButton)
+demoButton.addTarget(ctrl2, action: #selector(ButtonController.buttonTouched) , for: .touchUpInside )
 
 let modeLabel = UILabel(frame: CGRect(x: width - offset * 3 - Int(UISwitch().bounds.width), y: height - (field + offset) / 2 - 20 / 2, width: 40, height: 20))
 modeLabel.text = "AI"
@@ -32,5 +36,6 @@ mainView.addSubview(playButton)
 mainView.addSubview(demoButton)
 mainView.addSubview(modeLabel)
 mainView.addSubview(switchAI)
+
 PlaygroundPage.current.liveView = mainView
 
