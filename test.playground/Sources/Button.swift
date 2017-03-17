@@ -1,17 +1,5 @@
 import Foundation
 import UIKit
-
-public class ButtonController {
-    private var button: UIButton
-    @objc public func buttonTouched() {
-        UIView.transition(with: self.button, duration: 0.5, options: .transitionCrossDissolve, animations: { self.button.isHighlighted = false }, completion: nil)
-    }
-    
-    public init(button: UIButton){
-        self.button = button
-    }
-}
-
 public class Button: UIButton {
     
     required public init(coder aDecoder: NSCoder) {
