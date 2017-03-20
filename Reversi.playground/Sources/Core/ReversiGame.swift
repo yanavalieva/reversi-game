@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public protocol ReversiGameDelegate: TwoPlayersGameDelegate, TurnbasedGameDelegate {}
 
@@ -149,11 +150,15 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     
     public func step(_ i: Int, _ j: Int) -> Bool {
         let total = ReversiGame.directions.map{ checkDirections(i, j, $0) }.flatMap{ $0 }
+        let color = firstPlayer?.color == .Black ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
         if total.count > 0 {
             for k in total {
                 board[k] = firstPlayer!.color
+                scene?.pieces[k]?.fillColor = color
             }
-            board[index(i, j)] = firstPlayer!.color
+            let id = index(i, j)
+            board[id] = firstPlayer!.color
+            scene?.pieces[id]?.fillColor = color
             firstPlayer!.score += total.count + 1
             secondPlayer!.score -= total.count
             return true

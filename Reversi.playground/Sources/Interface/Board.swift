@@ -7,12 +7,12 @@ public class Board: UIControl {
     private var dist : CGFloat = 0
     private var pieceSize : CGFloat = 0
     
-    public var pieces : [[CAShapeLayer?]] = []
+    public var pieces : [CAShapeLayer?] = []
     
     required public init() {
         super.init(frame: .zero)
         backgroundColor = #colorLiteral(red: 0.9315899611, green: 0.928239584, blue: 0.9350892901, alpha: 1)
-        pieces = Array(repeating: Array(repeating: nil, count: count), count: count)
+        pieces = Array(repeating: nil, count: count * count)
     }
     
     required public init(coder aDecoder: NSCoder) {
@@ -56,18 +56,19 @@ public class Board: UIControl {
     }
     
     public func drawPiece(i: Int, j: Int, color: CGColor) {
-        if pieces[i][j] == nil {
+        let id = i * count + j
+        if pieces[id] == nil {
             let p = CGPoint(x: CGFloat(i) * dist + (dist - pieceSize) / 2, y: CGFloat(j) * dist + (dist - pieceSize) / 2)
-            pieces[i][j] = CAShapeLayer()
-            pieces[i][j]!.fillColor = color
-            pieces[i][j]!.shadowRadius = 3
-            pieces[i][j]!.shadowOpacity = 0.5
-            pieces[i][j]!.shouldRasterize = true
-            pieces[i][j]!.path = CGPath(ellipseIn: CGRect(x: p.x, y: p.y, width: pieceSize, height: pieceSize), transform: nil)
-            layer.addSublayer(pieces[i][j]!)
+            pieces[id] = CAShapeLayer()
+            pieces[id]!.fillColor = color
+            pieces[id]!.shadowRadius = 3
+            pieces[id]!.shadowOpacity = 0.5
+            pieces[id]!.shouldRasterize = true
+            pieces[id]!.path = CGPath(ellipseIn: CGRect(x: p.x, y: p.y, width: pieceSize, height: pieceSize), transform: nil)
+            layer.addSublayer(pieces[id]!)
             return
         } else {
-            pieces[i][j]!.fillColor = color
+            pieces[id]!.fillColor = color
         }
     }
 }
