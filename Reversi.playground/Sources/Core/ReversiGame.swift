@@ -33,6 +33,19 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         self.scene = scene
     }
     
+    public func reset() {
+        board = Array(repeating: .Empty, count: boardSize * boardSize)
+        board[27] = .White
+        board[28] = .Black
+        board[35] = .Black
+        board[36] = .White
+        firstPlayer?.score = 2
+        secondPlayer?.score = 2
+        if firstPlayer?.color == .White {
+            swap(&firstPlayer, &secondPlayer)
+        }
+    }
+    
     public func joinFirst(player: Player) {
         if firstPlayer == nil {
             firstPlayer = player

@@ -8,7 +8,7 @@ import UIKit
 import PlaygroundSupport
 
 let scene = GameController()
-let game: ReversiGame = ReversiGame(scene: scene.gameBoard)
+let game: ReversiGame = ReversiAIGame(scene: scene.gameBoard)
 game.delegate = ReversiGameTracker()
 
 scene.game = game

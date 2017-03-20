@@ -33,6 +33,7 @@ extension TwoPlayersGameDelegate {
             print(game)
             scene?.drawPiece(i: square.0, j: square.1, color: player.color == .Black ?
                 #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+            scene?.reloadInputViews()
         case .skipTurn:
             print("\(player.name) skips the turn")
         }

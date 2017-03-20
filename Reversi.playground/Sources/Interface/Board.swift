@@ -55,6 +55,16 @@ public class Board: UIControl {
         
     }
     
+    public func reset() {
+        for i in 0..<pieces.count {
+            pieces[i]?.opacity = 0
+        }
+        drawPiece(i: 3, j: 3, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+        drawPiece(i: 3, j: 4, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
+        drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
+        drawPiece(i: 4, j: 4, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+    }
+    
     public func drawPiece(i: Int, j: Int, color: CGColor) {
         let id = i * count + j
         if pieces[id] == nil {
@@ -68,6 +78,7 @@ public class Board: UIControl {
             layer.addSublayer(pieces[id]!)
             return
         } else {
+            pieces[id]!.opacity = 1
             pieces[id]!.fillColor = color
         }
     }

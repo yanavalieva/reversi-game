@@ -6,7 +6,7 @@ public class GameController : UIViewController {
     public let reversiLabel = UILabel()
     public let playgrLabel = UILabel()
     public let infoButton = UIButton(type: .infoLight)
-    public let gameBoard = Board()
+    public var gameBoard = Board()
     public let playButton = Button(label: "Play!")
     public let demoButton = Button(label: "Demo")
     public let modeLabel = UILabel()
@@ -71,7 +71,7 @@ public class GameController : UIViewController {
     
     @objc private func buttonTouched(sender: Button) {
         if sender.titleLabel?.text == sender.label {
-            sender.setTitle("Stop", for: .normal)
+            sender.setTitle("Reset", for: .normal)
             switchAI.isEnabled = false
             game?.play()
             if sender == demoButton {
@@ -81,6 +81,13 @@ public class GameController : UIViewController {
             }
         } else {
             sender.setTitle(sender.label, for: .normal)
+            gameBoard.reset()
+            game?.reset()
+            if sender == demoButton {
+                playButton.isEnabled = true
+            } else {
+                demoButton.isEnabled = true
+            }
         }
         UIView.transition(with: sender, duration: 0.5, options: .transitionCrossDissolve, animations: { sender.isHighlighted = false }, completion: nil)
     }

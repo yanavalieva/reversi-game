@@ -12,7 +12,7 @@ public class ReversiAIGame : ReversiGame {
         var maxHeur = -Double.infinity
         for child in children {
             let h = -child.0.alphaBeta(
-                alpha: -Double.infinity, beta: Double.infinity, depth: 4)
+                alpha: -Double.infinity, beta: Double.infinity, depth: 0)
             if h > maxHeur {
                 maxHeur = h
                 maxChild = child
