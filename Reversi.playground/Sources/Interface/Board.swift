@@ -48,10 +48,10 @@ public class Board: UIControl {
             line.strokeColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
             layer.addSublayer(line)
         }
-        drawPiece(i: 3, j: 3, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+        drawPiece(i: 3, j: 3, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
         drawPiece(i: 3, j: 4, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
-        drawPiece(i: 4, j: 4, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+        drawPiece(i: 4, j: 4, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
         
     }
     
@@ -59,10 +59,10 @@ public class Board: UIControl {
         for i in 0..<pieces.count {
             pieces[i]?.opacity = 0
         }
-        drawPiece(i: 3, j: 3, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+        drawPiece(i: 3, j: 3, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
         drawPiece(i: 3, j: 4, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
-        drawPiece(i: 4, j: 4, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+        drawPiece(i: 4, j: 4, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
     }
     
     public func drawPiece(i: Int, j: Int, color: CGColor) {
@@ -74,7 +74,19 @@ public class Board: UIControl {
             pieces[id]!.shadowRadius = 3
             pieces[id]!.shadowOpacity = 0.5
             pieces[id]!.shouldRasterize = true
+            pieces[id]!.shadowOffset = CGSize(width: 4, height: 4)
             pieces[id]!.path = CGPath(ellipseIn: CGRect(x: p.x, y: p.y, width: pieceSize, height: pieceSize), transform: nil)
+            
+            let spot = CAShapeLayer()
+            spot.fillColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+            spot.shadowColor = #colorLiteral(red: 0.9962956309, green: 0.9927255511, blue: 1, alpha: 1).cgColor
+            spot.opacity = 0.6
+            spot.shadowRadius = 4
+            spot.shadowOpacity = 1
+            spot.shadowOffset = CGSize(width: 4, height: 3)
+            spot.path = CGPath(ellipseIn: CGRect(x: p.x + 10, y: p.y + 10, width: 10, height: 10), transform: nil)
+            
+            pieces[id]!.addSublayer(spot)
             layer.addSublayer(pieces[id]!)
             return
         } else {
