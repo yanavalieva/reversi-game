@@ -3,6 +3,10 @@ import UIKit
 
 public class Board: UIControl {
     
+    private var count = 8
+    private var dist : CGFloat = 0
+    private var pieceSize : CGFloat = 0
+    
     required public init() {
         super.init(frame: .zero)
         backgroundColor = #colorLiteral(red: 0.9315899611, green: 0.928239584, blue: 0.9350892901, alpha: 1)
@@ -12,10 +16,21 @@ public class Board: UIControl {
         super.init(coder: aDecoder)!
     }
     
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        let point = touch.location(in: self)
+        let i = Int(point.x / dist)
+        let j = Int(point.y / dist)
+        drawPiece(i: i, j: j, color: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1).cgColor)
+    }
+    
     override public func draw(_ rect: CGRect) {
-        let count = 8
-        let dist = bounds.width / CGFloat(count)
-        let pieceSize = dist * 0.8
+        super.draw(rect)
+        count = 8
+        dist = bounds.width / CGFloat(count)
+        pieceSize = dist * 0.8
         
         for i in 1..<count {
             let line = CAShapeLayer()
@@ -30,21 +45,21 @@ public class Board: UIControl {
             line.strokeColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
             layer.addSublayer(line)
         }
-        drawPiece(i: 3, j: 3, dist: dist, size: pieceSize, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
-        drawPiece(i: 3, j: 4, dist: dist, size: pieceSize, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
-        drawPiece(i: 4, j: 3, dist: dist, size: pieceSize, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
-        drawPiece(i: 4, j: 4, dist: dist, size: pieceSize, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+        drawPiece(i: 3, j: 3, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+        drawPiece(i: 3, j: 4, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
+        drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
+        drawPiece(i: 4, j: 4, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
 
     }
     
-    public func drawPiece(i: Int, j: Int, dist: CGFloat, size: CGFloat, color: CGColor) {
-        let p = CGPoint(x: CGFloat(i) * dist + (dist - size) / 2, y: CGFloat(j) * dist + (dist - size) / 2)
+    public func drawPiece(i: Int, j: Int, color: CGColor) {
+        let p = CGPoint(x: CGFloat(i) * dist + (dist - pieceSize) / 2, y: CGFloat(j) * dist + (dist - pieceSize) / 2)
         let piece = CAShapeLayer()
         piece.fillColor = color
         piece.shadowRadius = 3
         piece.shadowOpacity = 0.5
         piece.shouldRasterize = true
-        piece.path = CGPath(ellipseIn: CGRect(x: p.x, y: p.y, width: size, height: size), transform: nil)
+        piece.path = CGPath(ellipseIn: CGRect(x: p.x, y: p.y, width: pieceSize, height: pieceSize), transform: nil)
         layer.addSublayer(piece)
     }
 }
