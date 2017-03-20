@@ -49,7 +49,7 @@ public class Board: UIControl {
         drawPiece(i: 3, j: 4, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 4, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
-
+        
     }
     
     public func drawPiece(i: Int, j: Int, color: CGColor) {

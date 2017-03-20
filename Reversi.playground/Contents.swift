@@ -4,7 +4,7 @@
  ![PlayWithMe](reversi.jpg)
 */
 
-import Foundation
+/* import Foundation
 let game: ReversiGame = ReversiAIGame()
 game.delegate = ReversiGameTracker()
 print(game)
@@ -15,7 +15,14 @@ var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
 game.joinFirst(player: blackPlayer)
 game.joinSecond(player: whitePlayer)
 
-game.play()
+game.play() */
+
+import UIKit
+import PlaygroundSupport
+
+let scene = GameController()
+PlaygroundPage.current.liveView = scene.view
+
 
 
 

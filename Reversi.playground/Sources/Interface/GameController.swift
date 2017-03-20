@@ -22,12 +22,12 @@ public class GameController : UIViewController {
         
         view = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            
+        
         reversiLabel.frame = CGRect(x: offset, y: offset, width: 100, height: 40)
         reversiLabel.text = "Reversi"
         reversiLabel.font = UIFont(name: "GillSans", size: 30)
         reversiLabel.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-            
+        
         playgrLabel.frame = CGRect(x: offset + Int(reversiLabel.frame.width), y: offset, width: 135, height: 40)
         playgrLabel.text = "Playground"
         playgrLabel.font = UIFont(name: "GillSans", size: 30)
@@ -36,7 +36,7 @@ public class GameController : UIViewController {
         infoButton.frame = CGRect(x: offset + Int(reversiLabel.frame.width) + Int(playgrLabel.frame.width), y: offset, width: 40, height: 40)
         infoButton.tintColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         infoButton.addTarget(self, action: #selector(infoTouched), for: .touchUpInside)
-            
+        
         gameBoard.frame = CGRect(x: offset, y: offset + 10 + Int(reversiLabel.frame.height), width: width - offset * 2, height: width - offset * 2)
         
         playButton.frame = CGRect(x: offset * 2, y: height - (field + offset) / 2 - 60 / 2, width: 120, height: 60)
@@ -48,7 +48,7 @@ public class GameController : UIViewController {
         demoButton.setTitle("Demo", for: .normal)
         demoButton.setBackgroundImage(createImage(size: playButton.frame.size, color: clr!), for: .highlighted)
         demoButton.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
-
+        
         modeLabel.frame = CGRect(x: width - offset * 3 - Int(UISwitch().bounds.width), y: height - (field + offset) / 2 - 20 / 2, width: 40, height: 20)
         modeLabel.text = "AI"
         modeLabel.font = UIFont(name: "GillSans", size: 20)
