@@ -26,7 +26,7 @@ public class ReversiAIGame : ReversiGame {
             }
         }
         if step(maxChild.1, maxChild.2) {
-            delegate?.player(firstPlayer!, didTakeAction: .move(square: (maxChild.1, maxChild.2), game: self))
+            delegate?.player(firstPlayer!, didTakeAction: .move(square: (maxChild.1, maxChild.2), game: self, board: scene))
         } else {
             delegate?.playerError("Something went wrong")
         }
@@ -75,7 +75,7 @@ public class ReversiAIGame : ReversiGame {
     }
     
     func next(_ i: Int, _ j: Int) -> (ReversiAIGame, Int, Int)? {
-        let cloned = ReversiAIGame()
+        let cloned = ReversiAIGame(scene: nil)
         cloned.board = self.board
         cloned.firstPlayer = (self.firstPlayer as! ReversiPlayer).clone()
         cloned.secondPlayer = (self.secondPlayer as! ReversiPlayer).clone()

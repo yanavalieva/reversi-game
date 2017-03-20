@@ -7,10 +7,11 @@ public class GameController : UIViewController {
     public let playgrLabel = UILabel()
     public let infoButton = UIButton(type: .infoLight)
     public let gameBoard = Board()
-    public let playButton = Button()
-    public let demoButton = Button()
+    public let playButton = Button(label: "Play!")
+    public let demoButton = Button(label: "Demo")
     public let modeLabel = UILabel()
     public let switchAI = UISwitch()
+    public var game : ReversiGame?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +69,19 @@ public class GameController : UIViewController {
         view.addSubview(switchAI)
     }
     
-    @objc private func buttonTouched(sender: UIButton) {
+    @objc private func buttonTouched(sender: Button) {
+        if sender.titleLabel?.text == sender.label {
+            sender.setTitle("Stop", for: .normal)
+            switchAI.isEnabled = false
+            game?.play()
+            if sender == demoButton {
+                playButton.isEnabled = false
+            } else {
+                demoButton.isEnabled = false
+            }
+        } else {
+            sender.setTitle(sender.label, for: .normal)
+        }
         UIView.transition(with: sender, duration: 0.5, options: .transitionCrossDissolve, animations: { sender.isHighlighted = false }, completion: nil)
     }
     

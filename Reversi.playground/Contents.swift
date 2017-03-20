@@ -4,24 +4,21 @@
  ![PlayWithMe](reversi.jpg)
 */
 
-/* import Foundation
-let game: ReversiGame = ReversiAIGame()
+import UIKit
+import PlaygroundSupport
+
+let scene = GameController()
+let game: ReversiGame = ReversiGame(scene: scene.gameBoard)
 game.delegate = ReversiGameTracker()
-print(game)
+
+scene.game = game
+PlaygroundPage.current.liveView = scene.view
 
 var blackPlayer = ReversiPlayer(name: "James Moriarty")
 var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
 
 game.joinFirst(player: blackPlayer)
 game.joinSecond(player: whitePlayer)
-
-game.play() */
-
-import UIKit
-import PlaygroundSupport
-
-let scene = GameController()
-PlaygroundPage.current.liveView = scene.view
 
 
 

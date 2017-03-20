@@ -8,7 +8,7 @@ public protocol Player {
 
 public enum PlayerAction {
     case win
-    case move(square: (Int, Int), game: Game)
+    case move(square: (Int, Int), game: Game, board: Board?)
     case skipTurn
 }
 

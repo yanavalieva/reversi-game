@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public protocol TwoPlayersGame: BoardGame {
     var firstPlayer: Player? { get set }
@@ -27,9 +28,11 @@ extension TwoPlayersGameDelegate {
         switch action {
         case .win:
             print("\(player.name) wins!")
-        case let .move(square, game):
+        case let .move(square, game, scene):
             print("\(player.name) moves to [\(square.0 + 1),\(square.1 + 1)]")
             print(game)
+            scene?.drawPiece(i: square.0, j: square.1, color: player.color == .Black ?
+                #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
         case .skipTurn:
             print("\(player.name) skips the turn")
         }

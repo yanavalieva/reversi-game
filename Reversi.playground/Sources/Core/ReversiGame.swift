@@ -9,6 +9,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     public var firstPlayer: Player?
     public var secondPlayer: Player?
     public var delegate: ReversiGameDelegate?
+    public var scene: Board?
     
     static let directions = [
         { ($0 - 1, $1) },
@@ -21,13 +22,14 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         { ($0 - 1, $1 - 1) }
     ]
     
-    public init() {
+    public init(scene: Board?) {
         boardSize = 8
         board = Array(repeating: .Empty, count: boardSize * boardSize)
         board[27] = .White
         board[28] = .Black
         board[35] = .Black
         board[36] = .White
+        self.scene = scene
     }
     
     public func joinFirst(player: Player) {
@@ -115,7 +117,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
             ind = Int(arc4random()) % squares.count
             (i, j) = squares[ind]
         }
-        delegate?.player(firstPlayer!, didTakeAction: .move(square: (i, j), game: self))
+        delegate?.player(firstPlayer!, didTakeAction: .move(square: (i, j), game: self, board: scene))
     }
     
     private func checkDirections(_ i: Int, _ j: Int, _ next: (Int, Int) -> (Int, Int)) -> [Int] {
