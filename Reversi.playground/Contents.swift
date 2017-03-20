@@ -18,7 +18,7 @@ var blackPlayer = ReversiPlayer(name: "James Moriarty")
 var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
 
 game.joinFirst(player: blackPlayer)
-game.joinSecond(player: whitePlayer)
+game.joinSecond(player: whitePlayer) 
 
 
 
