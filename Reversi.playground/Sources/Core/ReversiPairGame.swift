@@ -14,11 +14,13 @@ public class ReversiPairGame: ReversiGame {
             if hasEnded {
                 break
             }
-            while(!didMakeTurn){
-            
-            }
+            while(!didMakeTurn){ }
             didMakeTurn = false
         }
         end()
+    }
+    
+    public override func humanMakesTurn(i: Int, j: Int) {
+        didMakeTurn = true
     }
 }

@@ -7,6 +7,7 @@ public class Board: UIControl {
     private var dist : CGFloat = 0
     private var pieceSize : CGFloat = 0
     
+    public var touchLocation : (Int, Int)?
     public var pieces : [CAShapeLayer?] = []
     
     required public override init(frame: CGRect) {
@@ -40,15 +41,15 @@ public class Board: UIControl {
     }
     
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
         guard touches.count > 0 && frame != .zero else {
             return
         }
-        let touch = touches.first!
-        let point = touch.location(in: self)
+        let touch = touches.first
+        let point = touch!.location(in: self)
         let i = Int(point.x / dist)
         let j = Int(point.y / dist)
-        drawPiece(i: i, j: j, color: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1).cgColor)
-        super.touchesBegan(touches, with: event)
+        touchLocation = (i, j)
     }
     
     public func reset() {

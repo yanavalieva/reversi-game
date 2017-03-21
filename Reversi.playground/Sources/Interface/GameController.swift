@@ -105,6 +105,9 @@ public class GameController : UIViewController {
     }
     
     @objc public func boardTouched() {
-        game?.humanMakesTurn()
+        guard let p = gameBoard.touchLocation else {
+            return
+        }
+        game?.humanMakesTurn(i: p.0, j: p.1)
     }
 }

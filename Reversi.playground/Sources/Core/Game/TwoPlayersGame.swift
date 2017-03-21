@@ -34,12 +34,12 @@ extension TwoPlayersGameDelegate {
             print(game)
             DispatchQueue.main.sync {
                 scene.drawPiece(i: square.0, j: square.1, color: player.color == .Black ?
-                #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
+                #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
             }
         case let .turnOver(square) :
             DispatchQueue.main.sync {
                 scene.pieces[square]?.fillColor = player.color == .Black ?
-                    #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+                    #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor
                 scene.setNeedsDisplay()
             }
         case .skipTurn:

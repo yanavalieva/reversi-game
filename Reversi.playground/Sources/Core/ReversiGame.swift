@@ -11,10 +11,9 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     public var secondPlayer: Player?
     public var delegate: ReversiGameDelegate?
     
-    
     public var didMakeTurn : Bool = false
     
-    public func humanMakesTurn() {
+    public func humanMakesTurn(i: Int, j: Int) {
         didMakeTurn = true
     }
     
