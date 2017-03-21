@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public protocol Game {
     var name: String { get }

@@ -9,32 +9,13 @@ public class Board: UIControl {
     
     public var pieces : [CAShapeLayer?] = []
     
-    required public init() {
-        super.init(frame: .zero)
+    required public override init(frame: CGRect) {
+        super.init(frame: frame)
         backgroundColor = #colorLiteral(red: 0.9315899611, green: 0.928239584, blue: 0.9350892901, alpha: 1)
         pieces = Array(repeating: nil, count: count * count)
-    }
-    
-    required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-    }
-    
-    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        let point = touch.location(in: self)
-        let i = Int(point.x / dist)
-        let j = Int(point.y / dist)
-        drawPiece(i: i, j: j, color: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1).cgColor)
-    }
-    
-    override public func draw(_ rect: CGRect) {
-        super.draw(rect)
         count = 8
         dist = bounds.width / CGFloat(count)
         pieceSize = dist * 0.8
-        
         for i in 1..<count {
             let line = CAShapeLayer()
             let linePath = UIBezierPath()
@@ -46,13 +27,28 @@ public class Board: UIControl {
             line.path = linePath.cgPath
             line.opacity = 1.0
             line.strokeColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
-            layer.addSublayer(line)
+            self.layer.addSublayer(line)
         }
         drawPiece(i: 3, j: 3, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
         drawPiece(i: 3, j: 4, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 4, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
-        
+    }
+
+    required public init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+    }
+    
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard touches.count > 0 && frame != .zero else {
+            return
+        }
+        let touch = touches.first!
+        let point = touch.location(in: self)
+        let i = Int(point.x / dist)
+        let j = Int(point.y / dist)
+        drawPiece(i: i, j: j, color: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1).cgColor)
+        super.touchesBegan(touches, with: event)
     }
     
     public func reset() {
@@ -88,6 +84,7 @@ public class Board: UIControl {
             
             pieces[id]!.addSublayer(spot)
             layer.addSublayer(pieces[id]!)
+            self.setNeedsDisplay()
             return
         } else {
             pieces[id]!.opacity = 1

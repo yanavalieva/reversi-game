@@ -9,6 +9,7 @@ public protocol TwoPlayersGame: BoardGame {
 }
 
 public protocol TwoPlayersGameDelegate: GameDelegate {
+    var scene : Board { get set }
     func firstPlayer(_ player: Player, didJoinTheGame game: TwoPlayersGame)
     func secondPlayer(_ player: Player, didJoinTheGame game: TwoPlayersGame)
     func player(_ player: Player, didTakeAction action: PlayerAction)
@@ -28,12 +29,19 @@ extension TwoPlayersGameDelegate {
         switch action {
         case .win:
             print("\(player.name) wins!")
-        case let .move(square, game, scene):
+        case let .move(square, game):
             print("\(player.name) moves to [\(square.0 + 1),\(square.1 + 1)]")
             print(game)
-            scene?.drawPiece(i: square.0, j: square.1, color: player.color == .Black ?
+            DispatchQueue.main.sync {
+                scene.drawPiece(i: square.0, j: square.1, color: player.color == .Black ?
                 #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor)
-            scene?.reloadInputViews()
+            }
+        case let .turnOver(square) :
+            DispatchQueue.main.sync {
+                scene.pieces[square]?.fillColor = player.color == .Black ?
+                    #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+                scene.setNeedsDisplay()
+            }
         case .skipTurn:
             print("\(player.name) skips the turn")
         }

@@ -12,7 +12,7 @@ public class ReversiAIGame : ReversiGame {
         var maxHeur = -Double.infinity
         for child in children {
             let h = -child.0.alphaBeta(
-                alpha: -Double.infinity, beta: Double.infinity, depth: 0)
+                alpha: -Double.infinity, beta: Double.infinity, depth: 3)
             if h > maxHeur {
                 maxHeur = h
                 maxChild = child
@@ -26,7 +26,7 @@ public class ReversiAIGame : ReversiGame {
             }
         }
         if step(maxChild.1, maxChild.2) {
-            delegate?.player(firstPlayer!, didTakeAction: .move(square: (maxChild.1, maxChild.2), game: self, board: scene))
+            delegate?.player(firstPlayer!, didTakeAction: .move(square: (maxChild.1, maxChild.2), game: self))
         } else {
             delegate?.playerError("Something went wrong")
         }
@@ -75,7 +75,7 @@ public class ReversiAIGame : ReversiGame {
     }
     
     func next(_ i: Int, _ j: Int) -> (ReversiAIGame, Int, Int)? {
-        let cloned = ReversiAIGame(scene: nil)
+        let cloned = ReversiAIGame()
         cloned.board = self.board
         cloned.firstPlayer = (self.firstPlayer as! ReversiPlayer).clone()
         cloned.secondPlayer = (self.secondPlayer as! ReversiPlayer).clone()

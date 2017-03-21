@@ -10,7 +10,13 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     public var firstPlayer: Player?
     public var secondPlayer: Player?
     public var delegate: ReversiGameDelegate?
-    public var scene: Board?
+    
+    
+    public var didMakeTurn : Bool = false
+    
+    public func humanMakesTurn() {
+        didMakeTurn = true
+    }
     
     static let directions = [
         { ($0 - 1, $1) },
@@ -23,14 +29,13 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         { ($0 - 1, $1 - 1) }
     ]
     
-    public init(scene: Board?) {
+    public init() {
         boardSize = 8
         board = Array(repeating: .Empty, count: boardSize * boardSize)
         board[27] = .White
         board[28] = .Black
         board[35] = .Black
         board[36] = .White
-        self.scene = scene
     }
     
     public func reset() {
@@ -92,7 +97,9 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         }
         start()
         while !hasEnded {
-            makeTurn()
+            //let timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (timer) in
+                self.makeTurn()
+            //}
             swap(&firstPlayer, &secondPlayer)
         }
         end()
@@ -131,7 +138,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
             ind = Int(arc4random()) % squares.count
             (i, j) = squares[ind]
         }
-        delegate?.player(firstPlayer!, didTakeAction: .move(square: (i, j), game: self, board: scene))
+        delegate?.player(firstPlayer!, didTakeAction: .move(square: (i, j), game: self))
     }
     
     private func checkDirections(_ i: Int, _ j: Int, _ next: (Int, Int) -> (Int, Int)) -> [Int] {
@@ -163,15 +170,14 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     
     public func step(_ i: Int, _ j: Int) -> Bool {
         let total = ReversiGame.directions.map{ checkDirections(i, j, $0) }.flatMap{ $0 }
-        let color = firstPlayer?.color == .Black ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
         if total.count > 0 {
             for k in total {
                 board[k] = firstPlayer!.color
-                scene?.pieces[k]?.fillColor = color
+                delegate?.player(firstPlayer!, didTakeAction: .turnOver(square: k))
             }
             let id = index(i, j)
             board[id] = firstPlayer!.color
-            scene?.pieces[id]?.fillColor = color
+            delegate?.player(firstPlayer!, didTakeAction: .turnOver(square: id))
             firstPlayer!.score += total.count + 1
             secondPlayer!.score -= total.count
             return true

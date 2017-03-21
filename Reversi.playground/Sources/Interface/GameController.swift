@@ -6,7 +6,7 @@ public class GameController : UIViewController {
     public let reversiLabel = UILabel()
     public let playgrLabel = UILabel()
     public let infoButton = UIButton(type: .infoLight)
-    public var gameBoard = Board()
+    public var gameBoard : Board!
     public let playButton = Button(label: "Play!")
     public let demoButton = Button(label: "Demo")
     public let modeLabel = UILabel()
@@ -38,7 +38,8 @@ public class GameController : UIViewController {
         infoButton.tintColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         infoButton.addTarget(self, action: #selector(infoTouched), for: .touchUpInside)
         
-        gameBoard.frame = CGRect(x: offset, y: offset + 10 + Int(reversiLabel.frame.height), width: width - offset * 2, height: width - offset * 2)
+        gameBoard = Board(frame: CGRect(x: offset, y: offset + 10 + Int(reversiLabel.frame.height), width: width - offset * 2, height: width - offset * 2))
+        gameBoard.addTarget(self, action: #selector(boardTouched), for: .touchUpInside)
         
         playButton.frame = CGRect(x: offset * 2, y: height - (field + offset) / 2 - 60 / 2, width: 120, height: 60)
         playButton.setTitle("Play!", for: .normal)
@@ -73,7 +74,12 @@ public class GameController : UIViewController {
         if sender.titleLabel?.text == sender.label {
             sender.setTitle("Reset", for: .normal)
             switchAI.isEnabled = false
-            game?.play()
+            DispatchQueue.global().async {
+                if let game = self.game {
+                    game.delegate = ReversiGameTracker(scene: self.gameBoard)
+                    game.play()
+                }
+            }
             if sender == demoButton {
                 playButton.isEnabled = false
             } else {
@@ -96,5 +102,9 @@ public class GameController : UIViewController {
         let alert = UIAlertController(title: "Title", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Button", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc public func boardTouched() {
+        game?.humanMakesTurn()
     }
 }
