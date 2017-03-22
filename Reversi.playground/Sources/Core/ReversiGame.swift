@@ -169,7 +169,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         let total = ReversiGame.directions.map{ checkDirections(i, j, $0) }.flatMap{ $0 }
         if total.count > 0 {
             for k in total {
-                board[self.index(k.0, k.1)] = firstPlayer!.color
+                board[index(k.0, k.1)] = firstPlayer!.color
                 delegate?.player(firstPlayer!, didTakeAction: .flip(square: (k.0, k.1), game: self))
             }
             let id = index(i, j)

@@ -16,14 +16,17 @@ public class ReversiInteractiveGame: ReversiGame {
             }
             while(!didMakeTurn){ }
             didMakeTurn = false
+            swap(&firstPlayer, &secondPlayer)
         }
         end()
     }
     
     public override func humanMakesTurn(i: Int, j: Int) {
-        /*while !step(i, j) {
+        print(i, j)
+        if !step(i, j) {
             delegate?.playerError("Wrong step")
-        }*/
+            return
+        }
         didMakeTurn = true
     }
 }

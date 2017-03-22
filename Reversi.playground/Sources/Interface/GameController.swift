@@ -108,6 +108,7 @@ public class GameController : UIViewController {
         guard let p = gameBoard.touchLocation else {
             return
         }
+        print(p.0, p.1)
         game?.humanMakesTurn(i: p.1, j: p.0)
     }
 }
