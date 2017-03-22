@@ -17,6 +17,7 @@ public class ReversiInteractiveGame: ReversiGame {
             while(!didMakeTurn){ }
             didMakeTurn = false
             swap(&firstPlayer, &secondPlayer)
+            print("!!!")
         }
         end()
     }
