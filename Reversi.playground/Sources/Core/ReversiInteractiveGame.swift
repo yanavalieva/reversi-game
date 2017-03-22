@@ -1,6 +1,6 @@
 import Foundation
 
-public class ReversiPairGame: ReversiGame {
+public class ReversiInteractiveGame: ReversiGame {
     
     override public func play() {
         guard let _ = firstPlayer, let _ = secondPlayer else {
@@ -21,6 +21,9 @@ public class ReversiPairGame: ReversiGame {
     }
     
     public override func humanMakesTurn(i: Int, j: Int) {
+        /*while !step(i, j) {
+            delegate?.playerError("Wrong step")
+        }*/
         didMakeTurn = true
     }
 }

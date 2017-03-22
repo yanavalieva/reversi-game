@@ -96,9 +96,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         }
         start()
         while !hasEnded {
-            //let timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (timer) in
-                self.makeTurn()
-            //}
+            self.makeTurn()
             swap(&firstPlayer, &secondPlayer)
         }
         end()
@@ -140,9 +138,9 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         delegate?.player(firstPlayer!, didTakeAction: .move(square: (i, j), game: self))
     }
     
-    private func checkDirections(_ i: Int, _ j: Int, _ next: (Int, Int) -> (Int, Int)) -> [Int] {
+    private func checkDirections(_ i: Int, _ j: Int, _ next: (Int, Int) -> (Int, Int)) -> [(Int, Int)] {
         var deadRivals = 0
-        var squares: [Int] = []
+        var squares: [(Int, Int)] = []
         var ti = i, tj = j
         if (elem(ti, tj) != PlayColor.Empty) {
             return []
@@ -155,7 +153,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
                 return []
             }
             if (board[cur] == secondPlayer!.color) {
-                squares.append(cur)
+                squares.append((ti, tj))
                 deadRivals += 1
             } else if board[cur] == firstPlayer!.color && deadRivals > 0 {
                 return squares
@@ -171,12 +169,11 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         let total = ReversiGame.directions.map{ checkDirections(i, j, $0) }.flatMap{ $0 }
         if total.count > 0 {
             for k in total {
-                board[k] = firstPlayer!.color
-                delegate?.player(firstPlayer!, didTakeAction: .turnOver(square: k))
+                board[self.index(k.0, k.1)] = firstPlayer!.color
+                delegate?.player(firstPlayer!, didTakeAction: .flip(square: (k.0, k.1), game: self))
             }
             let id = index(i, j)
             board[id] = firstPlayer!.color
-            delegate?.player(firstPlayer!, didTakeAction: .turnOver(square: id))
             firstPlayer!.score += total.count + 1
             secondPlayer!.score -= total.count
             return true

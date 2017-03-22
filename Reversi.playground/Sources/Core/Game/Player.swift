@@ -10,6 +10,6 @@ public enum PlayerAction {
     case win
     case move(square: (Int, Int), game: Game)
     case skipTurn
-    case turnOver(square: Int)
+    case flip(square: (Int, Int), game: Game)
 }
 

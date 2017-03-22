@@ -8,7 +8,7 @@ import UIKit
 import PlaygroundSupport
 
 let scene = GameController()
-let game = ReversiPairGame()
+let game = ReversiInteractiveGame()
 scene.game = game
 
 PlaygroundPage.current.liveView = scene.view
