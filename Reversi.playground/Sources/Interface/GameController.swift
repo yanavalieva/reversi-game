@@ -76,7 +76,7 @@ public class GameController : UIViewController {
             switchAI.isEnabled = false
             DispatchQueue.global().async {
                 if let game = self.game {
-                    game.delegate = ReversiGameTracker(scene: self.gameBoard)
+                    game.delegate = ReversiGameTracker(scene: self)
                     game.play()
                 }
             }
@@ -99,16 +99,19 @@ public class GameController : UIViewController {
     }
     
     @objc private func infoTouched() {
-        let alert = UIAlertController(title: "Title", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Button", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        showMessage(title: "title", message: "message", button: "button")
     }
     
     @objc public func boardTouched() {
         guard let p = gameBoard.touchLocation else {
             return
         }
-        print(p.0, p.1)
-        game?.humanMakesTurn(i: p.1, j: p.0)
+        self.game?.humanMakesTurn(i: p.1, j: p.0)
+    }
+    
+    public func showMessage(title: String, message: String, button: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: button, style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

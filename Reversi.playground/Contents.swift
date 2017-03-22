@@ -11,7 +11,7 @@ let scene = GameController()
 let game = ReversiInteractiveGame()
 scene.game = game
 
-PlaygroundPage.current.liveView = scene.view
+PlaygroundPage.current.liveView = scene //.view
 
 var blackPlayer = ReversiPlayer(name: "James Moriarty")
 var whitePlayer = ReversiPlayer(name: "Sherlock Holmes")

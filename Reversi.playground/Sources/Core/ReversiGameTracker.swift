@@ -16,9 +16,9 @@ public class ReversiPlayer: Player {
 
 public class ReversiGameTracker: ReversiGameDelegate {
     
-    public var scene : Board
+    public var scene : GameController
     
-    public init(scene: Board) {
+    public init(scene: GameController) {
         self.scene = scene
     }
 }

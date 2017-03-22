@@ -22,8 +22,11 @@ public class ReversiInteractiveGame: ReversiGame {
                 return
             }
             delegate?.player(firstPlayer!, didTakeAction: .move(square: ((point?.0)!, (point?.1)!), game: self))
-            swap(&firstPlayer, &secondPlayer)
-            print("!!!")
+            
+            let _ = DispatchQueue.main.sync {
+                sleep(1)
+            }
+            swap(&self.firstPlayer, &self.secondPlayer)
         }
         end()
     }
