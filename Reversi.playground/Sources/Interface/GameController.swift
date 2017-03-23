@@ -3,15 +3,16 @@ import UIKit
 
 public class GameController : UIViewController {
     
-    public let reversiLabel = UILabel()
-    public let playgrLabel = UILabel()
-    public let infoButton = UIButton(type: .infoLight)
+    private let reversiLabel = UILabel()
+    private let playgrLabel = UILabel()
+    private let infoButton = UIButton(type: .infoLight)
+    private let playButton = Button(label: "Play!")
+    private let demoButton = Button(label: "Demo")
+    private let modeLabel = UILabel()
+    private let switchAI = UISwitch()
+    private var game : ReversiGame?
+    
     public var gameBoard : Board!
-    public let playButton = Button(label: "Play!")
-    public let demoButton = Button(label: "Demo")
-    public let modeLabel = UILabel()
-    public let switchAI = UISwitch()
-    public var game : ReversiGame?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -76,15 +77,6 @@ public class GameController : UIViewController {
             switchAI.isEnabled = false
             playButton.isEnabled = false
             game = switchAI.isOn ? ReversiAIGame() : ReversiGame()
-            let blackPlayer = ReversiPlayer(name: "James Moriarty")
-            let whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
-            game?.joinFirst(player: blackPlayer)
-            game?.joinSecond(player: whitePlayer)
-            if game is ReversiAIGame {
-                print("AI")
-            } else {
-                print("Usual")
-            }
             DispatchQueue.global().async {
                 if let game = self.game {
                     game.delegate = ReversiGameTracker(scene: self)

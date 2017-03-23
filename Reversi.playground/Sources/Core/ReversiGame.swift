@@ -36,29 +36,8 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         board[28] = .Black
         board[35] = .Black
         board[36] = .White
-    }
-    
-    public func joinFirst(player: Player) {
-        if firstPlayer == nil {
-            firstPlayer = player
-            firstPlayer?.color = .Black     // first player's color is black
-            delegate?.firstPlayer(player, didJoinTheGame: self)
-        } else {
-            delegate?.playerError("We already have the first player. You can be the second.")
-        }
-    }
-    
-    public func joinSecond(player: Player) {
-        if firstPlayer == nil {
-            delegate?.playerError("Sorry, you can't select this role. You can be the first player.")
-        } else if secondPlayer == nil {
-            secondPlayer = player
-            secondPlayer?.color = .White     // second player's color is white
-            delegate?.secondPlayer(player, didJoinTheGame: self)
-        }
-        else {
-            delegate?.playerError("Sorry, we already have enough players :(")
-        }
+        firstPlayer = ReversiPlayer(name: "Dark side", color: .Black, score: 2)
+        secondPlayer = ReversiPlayer(name: "Light side", color: .White, score: 2)
     }
     
     public func start() {
