@@ -14,15 +14,7 @@ public class ReversiInteractiveGame: ReversiGame {
             if hasEnded {
                 break
             }
-            while(!didMakeTurn){ }
-            didMakeTurn = false
-            
-            if !step(point!.0, point!.1) {
-                delegate?.playerError("Incorrect step")
-                return
-            }
-            delegate?.player(firstPlayer!, didTakeAction: .move(square: ((point?.0)!, (point?.1)!), game: self))
-            
+            humanMakesTurn()
             let _ = DispatchQueue.main.sync {
                 sleep(1)
             }
@@ -33,8 +25,18 @@ public class ReversiInteractiveGame: ReversiGame {
     
     private var point : (Int, Int)?
     
-    public override func humanMakesTurn(i: Int, j: Int) {
+    public override func humanStartsTurn(i: Int, j: Int) {
         didMakeTurn = true
         point = (i, j)
+    }
+    
+    private func humanMakesTurn() {
+        while(!didMakeTurn){ }
+        didMakeTurn = false
+        if !step(point!.0, point!.1) {
+            delegate?.playerError("Incorrect step")
+            humanMakesTurn()
+        }
+        delegate?.player(firstPlayer!, didTakeAction: .move(square: (point!.0, point!.1), game: self))
     }
 }

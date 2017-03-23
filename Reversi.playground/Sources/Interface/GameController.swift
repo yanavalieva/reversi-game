@@ -87,7 +87,7 @@ public class GameController : UIViewController {
         guard let p = gameBoard.touchLocation else {
             return
         }
-        self.game?.humanMakesTurn(i: p.1, j: p.0)
+        self.game?.humanStartsTurn(i: p.1, j: p.0)
     }
     
     public func showMessage(title: String, message: String, button: String) {

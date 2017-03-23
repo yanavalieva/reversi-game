@@ -33,6 +33,7 @@ extension TwoPlayersGameDelegate {
     }
     
     public func playerError(_ message: String) {
-        scene.showMessage(title: "Error!", message: message, button: "OK!")
+        //scene.showMessage(title: "Error!", message: message, button: "OK!")
+        print(message)
     }
 }
