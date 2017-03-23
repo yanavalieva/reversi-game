@@ -1,5 +1,7 @@
 import Foundation
 
+public protocol ReversiGameDelegate: TwoPlayersGameDelegate, TurnbasedGameDelegate {}
+
 public class ReversiPlayer: Player {
     public let name: String
     public var score: Int = 0
@@ -27,6 +29,12 @@ public class ReversiGameTracker: ReversiGameDelegate {
     public func gameDidStop() {
         DispatchQueue.main.sync {
             self.scene.gameBoard.reset()
+        }
+    }
+    
+    public func highlightCell(i: Int, j: Int) {
+        DispatchQueue.main.sync {
+            scene.gameBoard.drawCell(i: i, j: j)
         }
     }
 }

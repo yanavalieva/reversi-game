@@ -6,7 +6,9 @@ public protocol TurnbasedGame: TwoPlayersGame {
 }
 
 
-public protocol TurnbasedGameDelegate: GameDelegate {}
+public protocol TurnbasedGameDelegate: GameDelegate {
+    func highlightCell(i: Int, j: Int)
+}
 
 extension TurnbasedGameDelegate {
     public func gameDidEnd(_ game: Game) {

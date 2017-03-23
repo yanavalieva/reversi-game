@@ -1,8 +1,6 @@
 import Foundation
 import UIKit
 
-public protocol ReversiGameDelegate: TwoPlayersGameDelegate, TurnbasedGameDelegate {}
-
 public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     public var name = "Reversi"
     public var board: [PlayColor]
@@ -13,10 +11,6 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     
     public var didMakeTurn : Bool = false
     public var stopped : Bool = false
-    
-    public func humanStartsTurn(i: Int, j: Int) {
-        didMakeTurn = true
-    }
     
     static let directions = [
         { ($0 - 1, $1) },
@@ -157,6 +151,10 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
             return true
         }
         return false
+    }
+    
+    public func humanStartsTurn(i: Int, j: Int) {
+        didMakeTurn = true
     }
 }
 

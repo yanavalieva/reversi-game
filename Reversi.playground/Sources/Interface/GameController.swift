@@ -76,7 +76,7 @@ public class GameController : UIViewController {
     }
     
     @objc private func playTouched(sender: Button) {
-        buttonTouched(sender: sender, other: demoButton, usual: ReversiInteractiveGame(), smart: ReversiInteractiveGame())
+        buttonTouched(sender: sender, other: demoButton, usual: ReversiInteractiveGame(), smart: ReversiInteractiveAIGame())
     }
     
     @objc private func infoTouched() {
@@ -87,7 +87,7 @@ public class GameController : UIViewController {
         guard let p = gameBoard.touchLocation else {
             return
         }
-        self.game?.humanStartsTurn(i: p.1, j: p.0)
+        game?.humanStartsTurn(i: p.1, j: p.0)
     }
     
     public func showMessage(title: String, message: String, button: String) {

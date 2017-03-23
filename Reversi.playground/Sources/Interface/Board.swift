@@ -6,6 +6,7 @@ public class Board: UIControl {
     private var count = 8
     private var dist : CGFloat = 0
     private var pieceSize : CGFloat = 0
+    private var cells : [CAShapeLayer] = []
     
     public var touchLocation : (Int, Int)?
     public var pieces : [CAShapeLayer?] = []
@@ -50,6 +51,11 @@ public class Board: UIControl {
         let i = Int(point.x / dist)
         let j = Int(point.y / dist)
         touchLocation = (i, j)
+        
+        for i in 0..<cells.count {
+            cells[i].removeFromSuperlayer()
+        }
+        cells.removeAll()
     }
     
     public func reset() {
@@ -91,5 +97,16 @@ public class Board: UIControl {
             pieces[id]!.opacity = 1
             pieces[id]!.fillColor = color
         }
+    }
+    
+    public func drawCell(i: Int, j: Int) {
+        let cell = CAShapeLayer()
+        cell.path = UIBezierPath(rect: CGRect(x: CGFloat(i) * dist + 2, y: CGFloat(j) * dist + 2, width: dist - 4, height: dist - 4)).cgPath
+        cell.lineWidth = 2.0
+        cell.strokeColor = #colorLiteral(red: 0.4980392157, green: 1, blue: 0.831372549, alpha: 1).cgColor
+        cell.fillColor = nil
+        cells.append(cell)
+        layer.addSublayer(cell)
+        self.setNeedsDisplay()
     }
 }
