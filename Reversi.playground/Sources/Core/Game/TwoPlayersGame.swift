@@ -32,9 +32,8 @@ extension TwoPlayersGameDelegate {
         print("Game over!")
         if let g = game as? TwoPlayersGame {
             let winner = g.firstPlayer!.score > g.secondPlayer!.score ? g.firstPlayer! : g.secondPlayer!
-            //scene.showMessage(title: "Game over!", message: "\(winner.name) won! Score [ \(g.firstPlayer!.score) : \(g.secondPlayer!.score)]", button: "OK!")
-            print("\(winner.name) won! Score [ \(g.firstPlayer!.score) : \(g.secondPlayer!.score)]")
-            scene.gameBoard.reset()
+            //scene.showMessage(title: "Game over!", message: "\(winner.name) won! Score [ \(g.firstPlayer!.score) : \(g.secondPlayer!.score) ]", button: "OK!")
+            print("\(winner.name) won! Score [ \(g.firstPlayer!.score) : \(g.secondPlayer!.score) ]")
         }
     }
     

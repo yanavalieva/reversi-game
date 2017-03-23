@@ -113,6 +113,7 @@ public class GameController : UIViewController {
             game?.stop()
             other.isEnabled = true
             switchAI.isEnabled = true
+            gameBoard.reset()
         }
         UIView.transition(with: sender, duration: 0.5, options: .transitionCrossDissolve, animations: { sender.isHighlighted = false }, completion: nil)
         

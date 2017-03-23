@@ -55,8 +55,8 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         start()
         while !hasEnded && !stopped {
             self.makeTurn()
-            let _ = DispatchQueue.main.sync {
-                sleep(1)
+            DispatchQueue.main.sync {
+               // sleep(1)
             }
             swap(&firstPlayer, &secondPlayer)
         }
