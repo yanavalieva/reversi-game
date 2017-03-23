@@ -45,7 +45,7 @@ public class GameController : UIViewController {
         playButton.frame = CGRect(x: offset * 2, y: height - (field + offset) / 2 - 60 / 2, width: 120, height: 60)
         playButton.setTitle("Play!", for: .normal)
         playButton.setBackgroundImage(createImage(size: playButton.frame.size, color: clr!), for: .highlighted)
-        //playButton.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
+        playButton.addTarget(self, action: #selector(playTouched(sender:)), for: .touchUpInside)
         
         demoButton.frame = CGRect(x: offset * 3 + 120, y: height - (field + offset) / 2 - 60 / 2, width: 120, height: 60)
         demoButton.setTitle("Demo", for: .normal)
@@ -72,24 +72,11 @@ public class GameController : UIViewController {
     }
     
     @objc private func demoTouched(sender: Button) {
-        if sender.titleLabel?.text == sender.label {
-            sender.setTitle("Reset", for: .normal)
-            switchAI.isEnabled = false
-            playButton.isEnabled = false
-            game = switchAI.isOn ? ReversiAIGame() : ReversiGame()
-            DispatchQueue.global().async {
-                if let game = self.game {
-                    game.delegate = ReversiGameTracker(scene: self)
-                    game.play()
-                }
-            }
-        } else {
-            sender.setTitle(sender.label, for: .normal)
-            game?.stop()
-            playButton.isEnabled = true
-            switchAI.isEnabled = true
-        }
-        UIView.transition(with: sender, duration: 0.5, options: .transitionCrossDissolve, animations: { sender.isHighlighted = false }, completion: nil)
+        buttonTouched(sender: sender, other: playButton, usual: ReversiGame(), smart: ReversiAIGame())
+    }
+    
+    @objc private func playTouched(sender: Button) {
+        buttonTouched(sender: sender, other: demoButton, usual: ReversiInteractiveGame(), smart: ReversiInteractiveGame())
     }
     
     @objc private func infoTouched() {
@@ -107,5 +94,27 @@ public class GameController : UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: button, style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func buttonTouched(sender: Button, other: Button, usual: ReversiGame, smart: ReversiGame) {
+        if sender.titleLabel?.text == sender.label {
+            sender.setTitle("Reset", for: .normal)
+            switchAI.isEnabled = false
+            other.isEnabled = false
+            game = switchAI.isOn ? smart : usual
+            DispatchQueue.global().async {
+                if let game = self.game {
+                    game.delegate = ReversiGameTracker(scene: self)
+                    game.play()
+                }
+            }
+        } else {
+            sender.setTitle(sender.label, for: .normal)
+            game?.stop()
+            other.isEnabled = true
+            switchAI.isEnabled = true
+        }
+        UIView.transition(with: sender, duration: 0.5, options: .transitionCrossDissolve, animations: { sender.isHighlighted = false }, completion: nil)
+        
     }
 }
