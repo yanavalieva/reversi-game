@@ -1,3 +1,5 @@
+import Foundation
+
 public class ReversiPlayer: Player {
     public let name: String
     public var score: Int = 0
@@ -20,5 +22,11 @@ public class ReversiGameTracker: ReversiGameDelegate {
     
     public init(scene: GameController) {
         self.scene = scene
+    }
+    
+    public func gameDidStop() {
+        DispatchQueue.main.sync {
+            self.scene.gameBoard.reset()
+        }
     }
 }

@@ -44,12 +44,12 @@ public class GameController : UIViewController {
         playButton.frame = CGRect(x: offset * 2, y: height - (field + offset) / 2 - 60 / 2, width: 120, height: 60)
         playButton.setTitle("Play!", for: .normal)
         playButton.setBackgroundImage(createImage(size: playButton.frame.size, color: clr!), for: .highlighted)
-        playButton.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
+        //playButton.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
         
         demoButton.frame = CGRect(x: offset * 3 + 120, y: height - (field + offset) / 2 - 60 / 2, width: 120, height: 60)
         demoButton.setTitle("Demo", for: .normal)
         demoButton.setBackgroundImage(createImage(size: playButton.frame.size, color: clr!), for: .highlighted)
-        demoButton.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
+        demoButton.addTarget(self, action: #selector(demoTouched(sender:)), for: .touchUpInside)
         
         modeLabel.frame = CGRect(x: width - offset * 3 - Int(UISwitch().bounds.width), y: height - (field + offset) / 2 - 20 / 2, width: 40, height: 20)
         modeLabel.text = "AI"
@@ -70,30 +70,32 @@ public class GameController : UIViewController {
         view.addSubview(switchAI)
     }
     
-    @objc private func buttonTouched(sender: Button) {
+    @objc private func demoTouched(sender: Button) {
         if sender.titleLabel?.text == sender.label {
             sender.setTitle("Reset", for: .normal)
             switchAI.isEnabled = false
+            playButton.isEnabled = false
+            game = switchAI.isOn ? ReversiAIGame() : ReversiGame()
+            let blackPlayer = ReversiPlayer(name: "James Moriarty")
+            let whitePlayer = ReversiPlayer(name: "Sherlock Holmes")
+            game?.joinFirst(player: blackPlayer)
+            game?.joinSecond(player: whitePlayer)
+            if game is ReversiAIGame {
+                print("AI")
+            } else {
+                print("Usual")
+            }
             DispatchQueue.global().async {
                 if let game = self.game {
                     game.delegate = ReversiGameTracker(scene: self)
                     game.play()
                 }
             }
-            if sender == demoButton {
-                playButton.isEnabled = false
-            } else {
-                demoButton.isEnabled = false
-            }
         } else {
             sender.setTitle(sender.label, for: .normal)
-            gameBoard.reset()
-            game?.reset()
-            if sender == demoButton {
-                playButton.isEnabled = true
-            } else {
-                demoButton.isEnabled = true
-            }
+            game?.stop()
+            playButton.isEnabled = true
+            switchAI.isEnabled = true
         }
         UIView.transition(with: sender, duration: 0.5, options: .transitionCrossDissolve, animations: { sender.isHighlighted = false }, completion: nil)
     }

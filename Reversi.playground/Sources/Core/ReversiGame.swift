@@ -12,6 +12,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     public var delegate: ReversiGameDelegate?
     
     public var didMakeTurn : Bool = false
+    public var stopped : Bool = false
     
     public func humanMakesTurn(i: Int, j: Int) {
         didMakeTurn = true
@@ -35,19 +36,6 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         board[28] = .Black
         board[35] = .Black
         board[36] = .White
-    }
-    
-    public func reset() {
-        board = Array(repeating: .Empty, count: boardSize * boardSize)
-        board[27] = .White
-        board[28] = .Black
-        board[35] = .Black
-        board[36] = .White
-        firstPlayer?.score = 2
-        secondPlayer?.score = 2
-        if firstPlayer?.color == .White {
-            swap(&firstPlayer, &secondPlayer)
-        }
     }
     
     public func joinFirst(player: Player) {
@@ -95,11 +83,22 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
             return
         }
         start()
-        while !hasEnded {
+        while !hasEnded && !stopped {
             self.makeTurn()
+            let _ = DispatchQueue.main.sync {
+                sleep(1)
+            }
             swap(&firstPlayer, &secondPlayer)
         }
-        end()
+        if stopped {
+            delegate?.gameDidStop()
+        } else {
+            end()
+        }
+    }
+    
+    public func stop() {
+        stopped = true
     }
     
     public var hasEnded: Bool {

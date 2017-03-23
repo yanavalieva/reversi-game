@@ -17,19 +17,19 @@ public class Board: UIControl {
         count = 8
         dist = bounds.width / CGFloat(count)
         pieceSize = dist * 0.8
+        let line = CAShapeLayer()
+        let linePath = UIBezierPath()
         for i in 1..<count {
-            let line = CAShapeLayer()
-            let linePath = UIBezierPath()
             let offset = dist * CGFloat(i)
             linePath.move(to: CGPoint(x: offset, y: 0))
             linePath.addLine(to: CGPoint(x: offset, y: bounds.height))
             linePath.move(to: CGPoint(x: 0, y: offset))
             linePath.addLine(to: CGPoint(x: bounds.width, y: offset))
-            line.path = linePath.cgPath
-            line.opacity = 1.0
-            line.strokeColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
-            self.layer.addSublayer(line)
         }
+        line.path = linePath.cgPath
+        line.opacity = 1.0
+        line.strokeColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        self.layer.addSublayer(line)
         drawPiece(i: 3, j: 3, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
         drawPiece(i: 3, j: 4, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)

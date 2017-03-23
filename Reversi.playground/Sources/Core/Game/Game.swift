@@ -9,6 +9,7 @@ public protocol Game {
 public protocol GameDelegate {
     func gameDidStart(_ game: Game)
     func gameDidEnd(_ game: Game)
+    func gameDidStop()
     func drawGame()
 }
 
