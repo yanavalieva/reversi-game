@@ -34,7 +34,7 @@ public class ReversiGameTracker: ReversiGameDelegate {
     
     public func highlightCell(i: Int, j: Int) {
         DispatchQueue.main.sync {
-            scene.gameBoard.drawCell(i: i, j: j)
+            scene.gameBoard.drawCell(i: j, j: i)
         }
     }
 }

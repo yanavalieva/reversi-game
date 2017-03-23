@@ -25,6 +25,7 @@ public class ReversiInteractiveGame: ReversiGame {
                 continue
             }
             humanMakesTurn()
+            possibleSteps.removeAll()
             let _ = DispatchQueue.main.sync {
                 sleep(1)
             }
@@ -61,7 +62,6 @@ public class ReversiInteractiveGame: ReversiGame {
         }
         let _ = step(point!.0, point!.1)
         delegate?.player(firstPlayer!, didTakeAction: .move(square: (point!.0, point!.1), game: self))
-        possibleSteps.removeAll()
     }
     
     

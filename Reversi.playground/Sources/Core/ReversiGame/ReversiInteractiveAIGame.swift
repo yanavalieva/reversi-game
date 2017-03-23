@@ -1,6 +1,6 @@
 import Foundation
 
-public class ReversiInteractiveAIGame: ReversiAIGame {
+public class ReversiInteractiveAIGame: ReversiGame {
     
     private var point : (Int, Int)?
     private var possibleSteps : [(Int, Int)] = []
@@ -25,6 +25,7 @@ public class ReversiInteractiveAIGame: ReversiAIGame {
                 continue
             }
             humanMakesTurn()
+            possibleSteps.removeAll()
             let _ = DispatchQueue.main.sync {
                 sleep(1)
             }
@@ -61,7 +62,6 @@ public class ReversiInteractiveAIGame: ReversiAIGame {
         }
         let _ = step(point!.0, point!.1)
         delegate?.player(firstPlayer!, didTakeAction: .move(square: (point!.0, point!.1), game: self))
-        possibleSteps.removeAll()
     }
     
     

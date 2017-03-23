@@ -18,7 +18,7 @@ extension TwoPlayersGameDelegate {
         case .win:
             print("\(player.name) wins!")
         case let .move(square, game):
-            print(game)
+            //print(game)
             DispatchQueue.main.sync {
                 scene.gameBoard.drawPiece(i: square.1, j: square.0, color: player.color == .Black ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
             }
