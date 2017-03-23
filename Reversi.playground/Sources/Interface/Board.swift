@@ -62,10 +62,15 @@ public class Board: UIControl {
         for i in 0..<pieces.count {
             pieces[i]?.opacity = 0
         }
+        for i in 0..<cells.count {
+            cells[i].removeFromSuperlayer()
+        }
+        cells.removeAll()
         drawPiece(i: 3, j: 3, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
         drawPiece(i: 3, j: 4, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 4, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
+        self.setNeedsDisplay()
     }
     
     public func drawPiece(i: Int, j: Int, color: CGColor) {

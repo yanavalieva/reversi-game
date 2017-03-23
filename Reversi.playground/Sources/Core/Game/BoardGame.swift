@@ -24,10 +24,28 @@ extension BoardGame {
     }
 }
 
-public enum PlayColor: Character {
-    case White = "⚪️"
-    case Black = "⚫️"
-    case Empty = "🔹"
+public protocol BoardGameDelegate: GameDelegate {
+    var scene : GameController { get set }
+    func highlightCell(i: Int, j: Int)
+}
+
+extension BoardGameDelegate {
+    public func gameDidStop() {
+        DispatchQueue.main.sync {
+            self.scene.gameBoard.reset()
+        }
+    }
+
+    public func highlightCell(i: Int, j: Int) {
+        DispatchQueue.main.sync {
+            scene.gameBoard.drawCell(i: j, j: i)
+        }
+    }
+    
+    public func drawGame() {
+        print("Draw game!")
+        //scene.showMessage(title: "Game over!", message: "Draw game.", button: "OK!")
+    }
 }
 
 

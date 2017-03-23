@@ -37,17 +37,14 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     public func start() {
         firstPlayer?.score = 2
         secondPlayer?.score = 2
-        delegate?.gameDidStart(self)
     }
     
     public func end() {
         if firstPlayer!.score == secondPlayer!.score {
             delegate?.drawGame()
         } else {
-            delegate?.player(firstPlayer!.score > secondPlayer!.score ?
-                firstPlayer! : secondPlayer!, didTakeAction: .win)
+            delegate?.gameDidEnd(self)
         }
-        delegate?.gameDidEnd(self)
     }
     
     public func play() {
