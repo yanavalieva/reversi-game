@@ -8,7 +8,7 @@ public class ReversiInteractiveGame: ReversiGame {
             return
         }
         start()
-        while !hasEnded {
+        while !hasEnded && !stopped {
             makeTurn()
             swap(&firstPlayer, &secondPlayer)
             if hasEnded {
@@ -20,7 +20,11 @@ public class ReversiInteractiveGame: ReversiGame {
             }
             swap(&self.firstPlayer, &self.secondPlayer)
         }
-        end()
+        if stopped {
+            delegate?.gameDidStop()
+        } else {
+            end()
+        }
     }
     
     private var point : (Int, Int)?
@@ -31,7 +35,12 @@ public class ReversiInteractiveGame: ReversiGame {
     }
     
     private func humanMakesTurn() {
-        while(!didMakeTurn){ }
+        while(!didMakeTurn){
+            if stopped {
+                delegate?.gameDidStop()
+                return
+            }
+        }
         didMakeTurn = false
         if !step(point!.0, point!.1) {
             delegate?.playerError("Incorrect step")
