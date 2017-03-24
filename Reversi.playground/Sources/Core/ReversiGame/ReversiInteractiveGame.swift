@@ -7,7 +7,7 @@ public class ReversiInteractiveGame: ReversiGame {
     
     public var needPrompts : Bool = true
     
-    override public func play() {
+    public override func play() {
         guard let _ = firstPlayer, let _ = secondPlayer else {
             delegate?.playerError("No players!")
             return

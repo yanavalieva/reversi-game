@@ -92,7 +92,7 @@ public class Board: UIControl {
             spot.shadowRadius = 4
             spot.shadowOpacity = 1
             spot.shadowOffset = CGSize(width: 4, height: 3)
-            spot.path = CGPath(ellipseIn: CGRect(x: p.x + 10, y: p.y + 10, width: 10, height: 10), transform: nil)
+            spot.path = CGPath(ellipseIn: CGRect(x: p.x + 7, y: p.y + 7, width: 10, height: 10), transform: nil)
             
             pieces[id]!.addSublayer(spot)
             layer.addSublayer(pieces[id]!)
@@ -108,7 +108,7 @@ public class Board: UIControl {
         let cell = CAShapeLayer()
         cell.path = UIBezierPath(rect: CGRect(x: CGFloat(i) * dist + 2, y: CGFloat(j) * dist + 2, width: dist - 4, height: dist - 4)).cgPath
         cell.lineWidth = 2.0
-        cell.strokeColor = #colorLiteral(red: 0.4980392157, green: 1, blue: 0.831372549, alpha: 1).cgColor
+        cell.strokeColor = #colorLiteral(red: 0.4980392157, green: 1, blue: 0, alpha: 1).cgColor
         cell.fillColor = nil
         cells.append(cell)
         layer.addSublayer(cell)
