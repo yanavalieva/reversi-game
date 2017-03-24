@@ -5,7 +5,7 @@ public class ReversiInteractiveAIGame: ReversiGame {
     private var point : (Int, Int)?
     private var possibleSteps : [(Int, Int)] = []
     
-    public var needPrompts : Bool = true
+    public var needPrompts : Bool = false
     
     override public func play() {
         guard let _ = firstPlayer, let _ = secondPlayer else {

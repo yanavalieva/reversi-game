@@ -95,7 +95,13 @@ public class GameController : UIViewController {
     }
     
     @objc private func playTouched(sender: Button) {
-        buttonTouched(sender: sender, other: demoButton, usual: ReversiInteractiveGame(), smart: ReversiInteractiveAIGame())
+        let usual = ReversiInteractiveGame()
+        let smart = ReversiInteractiveAIGame()
+        if switchPrompts.isOn {
+            usual.needPrompts = true
+            smart.needPrompts = true
+        }
+        buttonTouched(sender: sender, other: demoButton, usual: usual, smart: smart)
     }
     
     @objc private func infoTouched() {
@@ -120,6 +126,7 @@ public class GameController : UIViewController {
             sender.setTitle("Reset", for: .normal)
             switchAI.isEnabled = false
             other.isEnabled = false
+            switchPrompts.isEnabled = false
             game = switchAI.isOn ? smart : usual
             DispatchQueue.global().async {
                 if let game = self.game {
@@ -132,6 +139,7 @@ public class GameController : UIViewController {
             game?.stop()
             other.isEnabled = true
             switchAI.isEnabled = true
+            switchPrompts.isEnabled = true
             gameBoard.reset()
         }
         UIView.transition(with: sender, duration: 0.5, options: .transitionCrossDissolve, animations: { sender.isHighlighted = false }, completion: nil)
