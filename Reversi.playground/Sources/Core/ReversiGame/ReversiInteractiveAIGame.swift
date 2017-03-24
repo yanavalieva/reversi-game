@@ -1,13 +1,13 @@
 import Foundation
 
-public class ReversiInteractiveAIGame: ReversiGame {
+public class ReversiInteractiveGame: ReversiGame {
     
     private var point : (Int, Int)?
     private var possibleSteps : [(Int, Int)] = []
     
     public var needPrompts : Bool = false
     
-    override public func play() {
+    public override func play() {
         guard let _ = firstPlayer, let _ = secondPlayer else {
             delegate?.playerError("No players!")
             return
@@ -61,7 +61,7 @@ public class ReversiInteractiveAIGame: ReversiGame {
             humanMakesTurn()
         }
         let _ = step(point!.0, point!.1)
-        delegate?.player(firstPlayer!, didTakeAction: .move(square: (point!.0, point!.1), game: self))
+        delegate?.player(firstPlayer!, didTakeAction: .move(square: (point!.0, point!.1)))
     }
     
     

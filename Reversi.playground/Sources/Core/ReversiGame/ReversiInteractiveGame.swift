@@ -61,7 +61,7 @@ public class ReversiInteractiveGame: ReversiGame {
             humanMakesTurn()
         }
         let _ = step(point!.0, point!.1)
-        delegate?.player(firstPlayer!, didTakeAction: .move(square: (point!.0, point!.1), game: self))
+        delegate?.player(firstPlayer!, didTakeAction: .move(square: (point!.0, point!.1)))
     }
     
     

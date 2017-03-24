@@ -55,7 +55,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         start()
         while !hasEnded && !stopped {
             self.makeTurn()
-            DispatchQueue.main.sync {
+            let _ = DispatchQueue.main.sync {
                sleep(1)
             }
             swap(&firstPlayer, &secondPlayer)
@@ -104,7 +104,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
             ind = Int(arc4random()) % squares.count
             (i, j) = squares[ind]
         }
-        delegate?.player(firstPlayer!, didTakeAction: .move(square: (i, j), game: self))
+        delegate?.player(firstPlayer!, didTakeAction: .move(square: (i, j)))
     }
     
     private func checkDirections(_ i: Int, _ j: Int, _ next: (Int, Int) -> (Int, Int)) -> [(Int, Int)] {
@@ -139,7 +139,7 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         if total.count > 0 {
             for k in total {
                 board[index(k.0, k.1)] = firstPlayer!.color
-                delegate?.player(firstPlayer!, didTakeAction: .flip(square: (k.0, k.1), game: self))
+                delegate?.player(firstPlayer!, didTakeAction: .flip(square: (k.0, k.1)))
             }
             let id = index(i, j)
             board[id] = firstPlayer!.color
