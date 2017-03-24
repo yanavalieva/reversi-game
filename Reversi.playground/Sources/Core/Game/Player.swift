@@ -7,9 +7,9 @@ public protocol Player {
 }
 
 public enum PlayerAction {
-    case move(square: (Int, Int), game: Game)
+    case move(square: (Int, Int))
     case skipTurn
-    case flip(square: (Int, Int), game: Game)
+    case flip(square: (Int, Int))
 }
 
 public enum PlayColor: Character {

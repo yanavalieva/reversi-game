@@ -14,11 +14,11 @@ public protocol TwoPlayersGameDelegate: BoardGameDelegate {
 extension TwoPlayersGameDelegate {
     public func player(_ player: Player, didTakeAction action: PlayerAction) {
         switch action {
-        case let .move(square, game):
+        case let .move(square):
             DispatchQueue.main.sync {
                 scene.gameBoard.drawPiece(i: square.1, j: square.0, color: player.color == .Black ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
             }
-        case let .flip(square, _):
+        case let .flip(square):
             DispatchQueue.main.sync {
                 self.scene.gameBoard.drawPiece(i: square.1, j: square.0, color: player.color == .Black ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
             }
