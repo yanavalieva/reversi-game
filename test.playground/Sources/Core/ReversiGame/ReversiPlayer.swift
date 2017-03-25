@@ -15,7 +15,7 @@ public class ReversiPlayer: Player {
         return ReversiPlayer(name: self.name, color: self.color, score: self.score)
     }
     
-    public func makeTurn(game: Game) -> (Int, Int)?{
+    public func makeTurn(game: Game) -> (Int, Int)? {
         guard let g = game as? ReversiGame else {
             return nil
         }

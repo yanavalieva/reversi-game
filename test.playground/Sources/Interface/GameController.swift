@@ -110,7 +110,8 @@ public class GameController : UIViewController {
             g.firstPlayer = ReversiPlayer(name: "Computer", color: .Black, score: 2)
             g.secondPlayer = ReversiPlayer(name: "You", color: .White, score: 2)
         }
-        buttonTouched(sender: sender, other: infoButton, g: g)
+        g.needPrompts = switchPrompts.isOn
+        buttonTouched(sender: sender, other: demoButton, g: g)
     }
     
     @objc private func infoTouched() {

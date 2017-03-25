@@ -2,6 +2,34 @@ import Foundation
 
 public class SmartReversiPlayer: ReversiPlayer {
     
+    public override func makeTurn(game: Game) -> (Int, Int)? {
+        guard let g = game as? ReversiGame else {
+            return nil
+        }
+        let children = generateChildren(game: game as! ReversiGame, color: self.color)
+        guard children.count > 0 else {
+            return nil
+        }
+        var maxChild : (ReversiGame, Int, Int) = children[0]
+        var maxHeur = -Double.infinity
+        let other = g.firstPlayer.color == self.color ? g.firstPlayer.color : g.secondPlayer.color
+        for child in children {
+            let h = -alphaBeta(game: child.0, alpha: -Double.infinity, beta: Double.infinity, depth: 3, color: other)
+            if h > maxHeur {
+                maxHeur = h
+                maxChild = child
+            }
+            else if h == maxHeur {
+                let rand = Int(arc4random()) % 2
+                if rand == 0 {
+                    maxHeur = h
+                    maxChild = child
+                }
+            }
+        }
+        return g.step(player: self, maxChild.1, maxChild.2) ? (maxChild.1, maxChild.2) : nil
+    }
+    
     private static let priority: [Double] = [
         50,  -2,  10,  7,  7,  10,  -2,  50,
         -2,  -5,   0,  2,  2,   0,  -5,  -2,
@@ -63,33 +91,5 @@ public class SmartReversiPlayer: ReversiPlayer {
             return nil
         }
         return (cloned, i, j)
-    }
-   
-    public override func makeTurn(game: Game) -> (Int, Int)? {
-        guard let g = game as? ReversiGame else {
-            return nil
-        }
-        let children = generateChildren(game: game as! ReversiGame, color: self.color)
-        guard children.count > 0 else {
-            return nil
-        }
-        var maxChild : (ReversiGame, Int, Int) = children[0]
-        var maxHeur = -Double.infinity
-        let other = g.firstPlayer.color == self.color ? g.firstPlayer.color : g.secondPlayer.color
-        for child in children {
-            let h = -alphaBeta(game: child.0, alpha: -Double.infinity, beta: Double.infinity, depth: 3, color: other)
-            if h > maxHeur {
-                maxHeur = h
-                maxChild = child
-            }
-            /*else if h == maxHeur {
-                let rand = Int(arc4random()) % 2
-                if rand == 0 {
-                    maxHeur = h
-                    maxChild = child
-                }
-            } */
-        }
-        return g.step(player: self, maxChild.1, maxChild.2) ? (maxChild.1, maxChild.2) : nil
     }
 }

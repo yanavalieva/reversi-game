@@ -11,6 +11,9 @@ public class InteractiveReversiGame: ReversiGame {
     public override func play() {
         while !hasEnded && !stopped {
             processStep(player: firstPlayer)
+            let _ = DispatchQueue.main.sync {
+                sleep(1)
+            }
             if hasEnded || stopped {
                 break
             }
@@ -20,9 +23,6 @@ public class InteractiveReversiGame: ReversiGame {
             }
             humanMakesTurn()
             possibleSteps.removeAll()
-            let _ = DispatchQueue.main.sync {
-                sleep(1)
-            }
         }
         if stopped {
             delegate?.gameDidStop()

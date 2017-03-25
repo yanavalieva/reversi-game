@@ -49,6 +49,9 @@ public class ReversiGame: TwoPlayersGame {
                 break
             } else {
                 processStep(player: secondPlayer)
+                let _ = DispatchQueue.main.sync {
+                    sleep(1)
+                }
             }
         }
         if stopped {

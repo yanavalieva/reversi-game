@@ -38,6 +38,7 @@ extension BoardGameDelegate {
     
     public func highlightCell(i: Int, j: Int) {
         DispatchQueue.main.sync {
+            print("cell")
             scene.gameBoard.drawCell(i: j, j: i)
         }
     }
