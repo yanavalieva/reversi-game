@@ -34,11 +34,6 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
         secondPlayer = ReversiPlayer(name: "Light side", color: .White, score: 2)
     }
     
-    public func start() {
-        firstPlayer?.score = 2
-        secondPlayer?.score = 2
-    }
-    
     public func end() {
         if firstPlayer!.score == secondPlayer!.score {
             delegate?.drawGame()
@@ -48,11 +43,6 @@ public class ReversiGame: TurnbasedGame, TwoPlayersGame {
     }
     
     public func play() {
-        guard let _ = firstPlayer, let _ = secondPlayer else {
-            delegate?.playerError("No players!")
-            return
-        }
-        start()
         while !hasEnded && !stopped {
             self.makeTurn()
             let _ = DispatchQueue.main.sync {

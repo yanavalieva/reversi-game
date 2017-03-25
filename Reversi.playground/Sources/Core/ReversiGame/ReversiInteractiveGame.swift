@@ -8,11 +8,6 @@ public class ReversiInteractiveGame: ReversiGame {
     public var needPrompts : Bool = false
     
     public override func play() {
-        guard let _ = firstPlayer, let _ = secondPlayer else {
-            delegate?.playerError("No players!")
-            return
-        }
-        start()
         while !hasEnded && !stopped {
             makeTurn()
             swap(&firstPlayer, &secondPlayer)
@@ -37,12 +32,12 @@ public class ReversiInteractiveGame: ReversiGame {
             end()
         }
     }
- 
+    
     public override func humanStartsTurn(i: Int, j: Int) {
         didMakeTurn = true
         point = (i, j)
     }
- 
+    
     private func humanMakesTurn() {
         if needPrompts {
             for step in possibleSteps {
@@ -69,13 +64,13 @@ public class ReversiInteractiveGame: ReversiGame {
         for i in 0..<boardSize {
             for j in 0..<boardSize {
                 if elem(i, j) == PlayColor.Empty {
-                        let res = ReversiGame.directions.map{ checkNoStep(i, j, $0) }.reduce(false, { $0 || $1 })
-                        if res {
-                            possibleSteps.append((i, j))
-                        }
+                    let res = ReversiGame.directions.map{ checkNoStep(i, j, $0) }.reduce(false, { $0 || $1 })
+                    if res {
+                        possibleSteps.append((i, j))
                     }
                 }
             }
+        }
         return possibleSteps.count > 0
     }
     

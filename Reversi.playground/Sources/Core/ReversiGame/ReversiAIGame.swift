@@ -12,7 +12,7 @@ public class ReversiAIGame : ReversiGame {
         var maxHeur = -Double.infinity
         for child in children {
             let h = -child.0.alphaBeta(
-                alpha: -Double.infinity, beta: Double.infinity, depth: 3)
+                alpha: -Double.infinity, beta: Double.infinity, depth: 0)
             if h > maxHeur {
                 maxHeur = h
                 maxChild = child
@@ -32,6 +32,18 @@ public class ReversiAIGame : ReversiGame {
         }
     }
     
+    public override func play() {
+        while !hasEnded && !stopped {
+            self.makeTurn()
+            swap(&firstPlayer, &secondPlayer)
+        }
+        if stopped {
+            delegate?.gameDidStop()
+        } else {
+            end()
+        }
+    }
+    
     private static let priority: [Double] = [
         50,  -2,  10,  7,  7,  10,  -2,  50,
         -2,  -5,   0,  2,  2,   0,  -5,  -2,
@@ -48,11 +60,12 @@ public class ReversiAIGame : ReversiGame {
         for i in 0...boardSize {
             if board[i] == firstPlayer?.color {
                 h += ReversiAIGame.priority[i]
-            } else {
-                h -= board[i] == secondPlayer?.color ? ReversiAIGame.priority[i] : 0
+            }
+            if board[i] == secondPlayer?.color {
+                h -= ReversiAIGame.priority[i]
             }
         }
-        return h / 64.0
+        return h / 64.0 * Double(firstPlayer!.score)
     }
  
     func alphaBeta(alpha: Double, beta: Double, depth: Int) -> Double {
