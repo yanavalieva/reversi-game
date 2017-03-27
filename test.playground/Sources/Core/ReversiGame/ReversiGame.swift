@@ -47,16 +47,10 @@ public class ReversiGame: TwoPlayersGame {
         start()
         while !hasEnded && !stopped {
             processStep(player: firstPlayer)
-            let _ = DispatchQueue.main.sync {
-                sleep(1)
-            }
             if hasEnded || stopped {
                 break
             } else {
                 processStep(player: secondPlayer)
-                let _ = DispatchQueue.main.sync {
-                    sleep(1)
-                }
             }
         }
         if stopped {

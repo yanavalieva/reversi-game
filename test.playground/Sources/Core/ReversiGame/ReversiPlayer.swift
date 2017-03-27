@@ -19,6 +19,9 @@ public class ReversiPlayer: Player {
         guard let g = game as? ReversiGame else {
             return nil
         }
+        let _ = DispatchQueue.main.sync {
+            sleep(1)
+        }
         var squares = [(Int, Int)]()
         for i in 0..<g.boardSize {
             for j in 0..<g.boardSize {

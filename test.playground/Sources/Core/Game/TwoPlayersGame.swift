@@ -24,7 +24,6 @@ extension TwoPlayersGameDelegate {
                 self.scene.gameBoard.drawPiece(i: square.1, j: square.0, color: player.color == .Black ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor : #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
             }
         case .skipTurn:
-            print("Skip turn")
             DispatchQueue.main.sync {
                 scene.updateState(message: "\(player.name) must skip the turn.")
             }
