@@ -12,6 +12,7 @@ public class InteractiveReversiGame: ReversiGame {
         start()
         while !hasEnded && !stopped {
             processStep(player: firstPlayer)
+            print(self)
             if hasEnded || stopped {
                 break
             }
@@ -21,6 +22,7 @@ public class InteractiveReversiGame: ReversiGame {
             }
             humanMakesTurn()
             possibleSteps.removeAll()
+            print(self)
         }
         if stopped {
             delegate?.gameDidStop()

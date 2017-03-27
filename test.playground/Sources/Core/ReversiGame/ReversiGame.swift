@@ -42,15 +42,16 @@ public class ReversiGame: TwoPlayersGame {
         }
     }
     
-    
     public func play() {
         start()
         while !hasEnded && !stopped {
             processStep(player: firstPlayer)
+            print(self)
             if hasEnded || stopped {
                 break
             } else {
                 processStep(player: secondPlayer)
+                print(self)
             }
         }
         if stopped {

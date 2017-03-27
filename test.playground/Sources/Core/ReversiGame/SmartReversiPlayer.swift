@@ -14,7 +14,7 @@ public class SmartReversiPlayer: ReversiPlayer {
         var maxHeur = -Double.infinity
         let other = g.firstPlayer.color == self.color ? g.firstPlayer.color : g.secondPlayer.color
         for child in children {
-            let h = -alphaBeta(game: child.0, alpha: -Double.infinity, beta: Double.infinity, depth: 3, color: other)
+            let h = -alphaBeta(game: child.0, alpha: -Double.infinity, beta: Double.infinity, depth: 2, color: other)
             if h > maxHeur {
                 maxHeur = h
                 maxChild = child
@@ -43,7 +43,7 @@ public class SmartReversiPlayer: ReversiPlayer {
     
     private func heuristic(game: ReversiGame, color: PlayColor) -> Double {
         var h = 0.0
-        for i in 0...game.boardSize {
+        for i in 0..<game.boardSize * game.boardSize {
             if game.board[i] == color {
                 h += SmartReversiPlayer.priority[i]
             } else {

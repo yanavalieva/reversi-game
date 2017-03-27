@@ -20,7 +20,7 @@ public class ReversiPlayer: Player {
             return nil
         }
         let _ = DispatchQueue.main.sync {
-            sleep(1)
+           // sleep(1)
         }
         var squares = [(Int, Int)]()
         for i in 0..<g.boardSize {
