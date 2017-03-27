@@ -42,16 +42,20 @@ public class ReversiGame: TwoPlayersGame {
         }
     }
     
+    internal var skipped = false
+    
     public func play() {
         start()
         while !hasEnded && !stopped {
-            processStep(player: firstPlayer)
-            print(self)
+            if !processStep(player: firstPlayer) {
+                return
+            }
             if hasEnded || stopped {
                 break
             } else {
-                processStep(player: secondPlayer)
-                print(self)
+                if !processStep(player: secondPlayer) {
+                    return
+                }
             }
         }
         if stopped {
@@ -61,12 +65,19 @@ public class ReversiGame: TwoPlayersGame {
         }
     }
     
-    internal func processStep(player: Player) {
+    internal func processStep(player: Player) -> Bool {
         if let square = player.makeTurn(game: self) {
             delegate?.player(player, didTakeAction: .move(square: square))
         } else {
-            delegate?.player(player, didTakeAction: .skipTurn)
+            if !skipped {
+                delegate?.player(player, didTakeAction: .skipTurn)
+                skipped = true
+            } else {
+                delegate?.drawGame()
+                return false
+            }
         }
+        return true
     }
     
     public func stop() {

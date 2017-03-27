@@ -4,25 +4,29 @@ public class InteractiveReversiGame: ReversiGame {
     
     private var point : (Int, Int)?
     private var possibleSteps : [(Int, Int)] = []
-    public var didMakeTurn : Bool = false
     public var needPrompts : Bool = false
     
+    private var didMakeTurn : Bool = false
  
     public override func play() {
         start()
         while !hasEnded && !stopped {
-            processStep(player: firstPlayer)
-            print(self)
+            if !processStep(player: firstPlayer) {
+                return
+            }
             if hasEnded || stopped {
                 break
             }
             if !checkPossibleSteps() {
+                if skipped {
+                    return
+                }
+                skipped = true
                 delegate?.player(secondPlayer, didTakeAction: .skipTurn)
                 continue
             }
             humanMakesTurn()
             possibleSteps.removeAll()
-            print(self)
         }
         if stopped {
             delegate?.gameDidStop()

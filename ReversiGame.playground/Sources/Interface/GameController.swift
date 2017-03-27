@@ -121,7 +121,7 @@ public class GameController : UIViewController {
         buttonTouched(sender: sender, other: demoButton, g: g)
     }
     
-    @objc public func boardTouched() {
+    @objc private func boardTouched() {
         guard let p = gameBoard.touchLocation else {
             return
         }

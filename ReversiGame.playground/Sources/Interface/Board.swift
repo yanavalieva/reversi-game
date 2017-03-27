@@ -6,10 +6,10 @@ public class Board: UIControl {
     private var count = 8
     private var dist : CGFloat = 0
     private var pieceSize : CGFloat = 0
-    private var cells : [CAShapeLayer] = []
     
     public var touchLocation : (Int, Int)?
-    public var pieces : [CAShapeLayer?] = []
+    private var pieces : [CAShapeLayer?] = []
+    private var cells : [CAShapeLayer] = []
     
     required public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,7 +36,7 @@ public class Board: UIControl {
         drawPiece(i: 4, j: 3, color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor)
         drawPiece(i: 4, j: 4, color: #colorLiteral(red: 0.976108253, green: 0.9726067185, blue: 0.9797653556, alpha: 1).cgColor)
     }
-
+    
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }

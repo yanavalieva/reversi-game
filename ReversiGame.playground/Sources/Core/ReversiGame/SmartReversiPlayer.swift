@@ -72,7 +72,7 @@ public class SmartReversiPlayer: ReversiPlayer {
         return score
     }
     
-    func generateChildren(game: ReversiGame, color: PlayColor) -> [(ReversiGame, Int, Int)] {
+    private func generateChildren(game: ReversiGame, color: PlayColor) -> [(ReversiGame, Int, Int)] {
         var children: [(ReversiGame, Int, Int)?] = []
         for i in 0...game.boardSize {
             for j in 0...game.boardSize {
