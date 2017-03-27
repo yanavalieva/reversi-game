@@ -9,6 +9,7 @@ public class InteractiveReversiGame: ReversiGame {
     
  
     public override func play() {
+        start()
         while !hasEnded && !stopped {
             processStep(player: firstPlayer)
             let _ = DispatchQueue.main.sync {

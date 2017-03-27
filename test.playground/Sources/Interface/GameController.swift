@@ -5,13 +5,13 @@ public class GameController : UIViewController {
     
     private let reversiLabel = UILabel()
     private let playgrLabel = UILabel()
-    private let infoButton = UIButton(type: .infoLight)
     private let playButton = Button(label: "Play!")
     private let demoButton = Button(label: "Demo")
     private let modeLabel = UILabel()
     private let promptLabel = UILabel()
     private let switchAI = UISwitch()
     private let switchPrompts = UISwitch()
+    private let stateLabel = UILabel()
     private var game : ReversiGame?
     
     public var gameBoard : Board!
@@ -36,21 +36,24 @@ public class GameController : UIViewController {
         playgrLabel.font = UIFont(name: "GillSans", size: 30)
         playgrLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
-        infoButton.frame = CGRect(x: offset + Int(reversiLabel.frame.width) + Int(playgrLabel.frame.width), y: offset * 3, width: 40, height: 40)
-        infoButton.tintColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-        infoButton.addTarget(self, action: #selector(infoTouched), for: .touchUpInside)
-        
         gameBoard = Board(frame: CGRect(x: offset, y: offset * 5 + Int(reversiLabel.frame.height), width: width - offset * 2, height: width - offset * 2))
         gameBoard.addTarget(self, action: #selector(boardTouched), for: .touchUpInside)
         
-        var tmp = Int(gameBoard.frame.height) + offset * 8 + Int(reversiLabel.frame.height)
-        playButton.frame = CGRect(x: offset, y: tmp, width: width - offset * 2, height: 50)
+        var tmp = Int(gameBoard.frame.height) + offset * 7 + Int(reversiLabel.frame.height)
+        stateLabel.frame = CGRect(x: offset, y: tmp, width: width - offset * 2, height: 50)
+        stateLabel.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+        stateLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        stateLabel.textAlignment = .center
+        stateLabel.font = UIFont(name: "GillSans", size: 20)
+        stateLabel.text = "Let's play!"
+        
+        tmp += 50 + offset * 2
+        playButton.frame = CGRect(x: offset, y: tmp, width: (width - offset * 3) / 2, height: 50)
         playButton.setTitle("Play!", for: .normal)
         playButton.setBackgroundImage(createImage(size: playButton.frame.size, color: clr!), for: .highlighted)
         playButton.addTarget(self, action: #selector(playTouched(sender:)), for: .touchUpInside)
         
-        tmp += 50 + offset * 2
-        demoButton.frame = CGRect(x: offset, y: tmp, width: width - offset * 2, height: 50)
+        demoButton.frame = CGRect(x: offset * 2 + Int(playButton.bounds.width), y: tmp, width: (width - offset * 3) / 2, height: 50)
         demoButton.setTitle("Demo", for: .normal)
         demoButton.setBackgroundImage(createImage(size: playButton.frame.size, color: clr!), for: .highlighted)
         demoButton.addTarget(self, action: #selector(demoTouched(sender:)), for: .touchUpInside)
@@ -79,14 +82,18 @@ public class GameController : UIViewController {
         
         view.addSubview(reversiLabel)
         view.addSubview(playgrLabel)
-        view.addSubview(infoButton)
         view.addSubview(gameBoard)
+        view.addSubview(stateLabel)
         view.addSubview(playButton)
         view.addSubview(demoButton)
         view.addSubview(modeLabel)
         view.addSubview(switchAI)
         view.addSubview(promptLabel)
         view.addSubview(switchPrompts)
+    }
+    
+    public func updateState(message: String) {
+        stateLabel.text = message
     }
     
     @objc private func demoTouched(sender: Button) {
@@ -114,10 +121,6 @@ public class GameController : UIViewController {
         buttonTouched(sender: sender, other: demoButton, g: g)
     }
     
-    @objc private func infoTouched() {
-        showMessage(title: "title", message: "message", button: "button")
-    }
-    
     @objc public func boardTouched() {
         guard let p = gameBoard.touchLocation else {
             return
@@ -125,12 +128,6 @@ public class GameController : UIViewController {
         if let g = game as? InteractiveReversiGame {
             g.humanStartsTurn(i: p.1, j: p.0)
         }
-    }
-    
-    public func showMessage(title: String, message: String, button: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: button, style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
     
     private func buttonTouched(sender: Button, other: Button, g: ReversiGame) {
@@ -149,6 +146,7 @@ public class GameController : UIViewController {
         } else {
             sender.setTitle(sender.label, for: .normal)
             game?.stop()
+            updateState(message: "Let's play!")
             other.isEnabled = true
             switchAI.isEnabled = true
             switchPrompts.isEnabled = true

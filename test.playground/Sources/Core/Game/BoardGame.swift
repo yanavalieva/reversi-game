@@ -30,6 +30,13 @@ public protocol BoardGameDelegate: GameDelegate {
 }
 
 extension BoardGameDelegate {
+    
+    public func gameDidStart() {
+        DispatchQueue.main.sync {
+            scene.updateState(message: "The game is on!")
+        }
+    }
+    
     public func gameDidStop() {
         DispatchQueue.main.sync {
             self.scene.gameBoard.reset()
@@ -38,13 +45,13 @@ extension BoardGameDelegate {
     
     public func highlightCell(i: Int, j: Int) {
         DispatchQueue.main.sync {
-            print("cell")
             scene.gameBoard.drawCell(i: j, j: i)
         }
     }
     
     public func drawGame() {
-        print("Draw game!")
-        //scene.showMessage(title: "Game over!", message: "Draw game.", button: "OK!")
+        DispatchQueue.main.sync {
+            scene.updateState(message: "Draw game.")
+        }
     }
 }

@@ -30,6 +30,10 @@ public class ReversiGame: TwoPlayersGame {
         board[36] = .White
     }
     
+    public func start() {
+        delegate?.gameDidStart()
+    }
+    
     public func end() {
         if firstPlayer.score == secondPlayer.score {
             delegate?.drawGame()
@@ -40,6 +44,7 @@ public class ReversiGame: TwoPlayersGame {
     
     
     public func play() {
+        start()
         while !hasEnded && !stopped {
             processStep(player: firstPlayer)
             let _ = DispatchQueue.main.sync {
