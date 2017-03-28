@@ -26,6 +26,7 @@ public class InteractiveReversiGame: ReversiGame {
                 continue
             }
             humanMakesTurn()
+            skipped = false
             possibleSteps.removeAll()
         }
         if stopped {

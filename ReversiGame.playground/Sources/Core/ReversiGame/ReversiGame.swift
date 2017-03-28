@@ -68,6 +68,7 @@ public class ReversiGame: TwoPlayersGame {
     internal func processStep(player: Player) -> Bool {
         if let square = player.makeTurn(game: self) {
             delegate?.player(player, didTakeAction: .move(square: square))
+            skipped = false
         } else {
             if !skipped {
                 delegate?.player(player, didTakeAction: .skipTurn)
